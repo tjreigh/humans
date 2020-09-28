@@ -1,7 +1,7 @@
 <template>
 	<div class="container">
 		<p>test {{ items }}</p>
-		<div class="post" v-for="item in items" :key="item.id">
+		<div class="post" v-for="item in items" :key="item.id" @click="openModal(item.id)">
 			<img class="postImg" :src="item.img"/>
 			<div class="desc">
 				<p>{{ item.desc }}</p>
@@ -18,6 +18,10 @@ import { Item } from '../../types/item';
 @Component
 export default class Post extends Vue {
 	@Prop()	private items!: Item[]
+
+	openModal(id: number) {
+		this.$router.push({ path: `/post/${id}` });
+	}
 };
 </script>
 
