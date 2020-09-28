@@ -13,7 +13,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
-import Item from '../types/item';
+import { Item } from '../../types/item';
 
 @Component
 export default class Post extends Vue {
