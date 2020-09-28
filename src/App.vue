@@ -1,29 +1,41 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
-  </div>
+	<div id="app">
+		<Post v-bind:items="items" />
+	</div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-import HelloWorld from './components/HelloWorld.vue'
+import { Component, Vue } from 'vue-property-decorator';
+import Post from './components/Post.vue';
+import { Item } from '../types/item';
 
 @Component({
-  components: {
-    HelloWorld
-  }
+	components: {
+		Post,
+	},
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+	items: Item[] = [];
+	created() {
+		fetch('https://lhs-humans.glitch.me/data')
+			.then(res => res.json())
+			.then(data => {
+				this.items = data.items;
+			});
+	};
+}
 </script>
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+	margin: 10px;
+	padding: 5px;
+	color: #231F20;
+	background: #efefef;
+	font-family: 'Proxima Nova', sans-serif;
+	font-size: 1em;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	overflow-x: hidden;
 }
 </style>
