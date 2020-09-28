@@ -21,7 +21,7 @@ export default class Post extends Vue {
 };
 </script>
 
-<style>
+<style lang="scss">
 .container {
 	position: relative;
 	z-index: 0;
