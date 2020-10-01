@@ -1,10 +1,11 @@
 <template>
 	<div class="container">
-		<p>test {{ items }}</p>
-		<div class="post" v-for="item in items" :key="item.id" @click="openModal(item.id)">
-			<img class="postImg" :src="item.img"/>
-			<div class="desc">
-				<p>{{ item.desc }}</p>
+		<div class="post" v-for="item in items" :key="item.id" @click="openModal(item.id)" :title="item.id">
+			<div class="postContent">
+				<img class="postImg" :src="item.img"/>
+				<div class="desc">
+					<p>{{ item.desc }}</p>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -17,15 +18,42 @@ import { Item } from '../../types/item';
 
 @Component
 export default class Post extends Vue {
-	@Prop()	private items!: Item[]
+	@Prop({
+		required: true,
+	})
+	private items!: Item[]
 
-	openModal(id: number) {
+	openModal = (id: number) => {
 		this.$router.push({ path: `/post/${id}` });
 	}
+
+	/* The following code is a disgusting "migration" from vanilla JS
+		 Please refrain from informing me just how awful it is.
+		 Trust me, I know. I wrote it. */
+	resizeGridItem = (item: HTMLElement) => {
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		const grid: Element = document.querySelector('div.container')!; // Yes this assertion is stupid
+		const rowHeight = parseInt(window.getComputedStyle(grid)?.getPropertyValue('grid-auto-rows'));
+		const rowGap = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-row-gap'));
+		const rowSpan = Math.ceil((item.children[0].getBoundingClientRect().height + rowGap) / (rowHeight + rowGap)) ?? 0;
+		item.style.gridRowEnd = `span ${rowSpan}`;
+	};
+
+	resizeAllGridItems = () => {
+		const allItems = document.getElementsByClassName('post');
+		for (let x = 0; x < allItems.length; x++) {
+			this.resizeGridItem(allItems[x] as HTMLElement); // Assert to HTMLElement for style property
+		}
+	};
+
+	mounted() {
+		setTimeout(this.resizeAllGridItems, 350);
+		window.addEventListener('resize', this.resizeAllGridItems);
+	};
 };
 </script>
 
-<style lang="scss">
+<style scoped>
 .container {
 	position: relative;
 	z-index: 0;
@@ -39,6 +67,15 @@ export default class Post extends Vue {
 
 .post {
 	position: relative;
+}
+
+.desc {
+	padding: 5px 15px 10px;
+	font-size: 13pt;
+}
+
+.desc p {
+	margin-bottom: 10px;
 }
 
 .postImg {

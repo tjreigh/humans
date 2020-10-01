@@ -27,7 +27,7 @@ export default class App extends Vue {
 </script>
 
 <style>
-#app {
+body {
 	margin: 10px;
 	padding: 5px;
 	color: #231F20;

@@ -1,5 +1,8 @@
 <template>
 	<div>
+		<router-view>
+			<p>This is the modal with id {{ $route.params.id }}</p>
+		</router-view>
 	</div>
 </template>
 

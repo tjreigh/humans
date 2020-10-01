@@ -7,11 +7,15 @@ Vue.config.productionTip = false;
 
 const router = new VueRouter({
 	routes: [
-		{ path: '/post/:id', component: PostModal },
-	]
+		{
+			path: '/post/:id',
+			name: 'PostModal',
+			component: PostModal,
+		},
+	],
 });
 
 new Vue({
 	render: h => h(App),
-	router
+	router,
 }).$mount('#app');
