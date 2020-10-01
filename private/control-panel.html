@@ -1,73 +1,63 @@
 <html>
 	<head>
-		<link rel="stylesheet" type="text/css" src="../../styles/control.css">
+		<style>
+			br {
+				display: block;
+				height: 5px;
+				padding: 5px;
+			}
+
+			ul {
+				display: block;
+				list-style-type: none;
+				margin: 0;
+				padding: 5px;
+			}
+
+			li {
+				padding: 5px;
+			}
+
+			div > form{
+				display: none;
+			}
+		</style>
 	</head>
-	<h1>Edit Humans of Legacy</h1>
-	<ul id="options">
-		<li><button id="add">Add content</button><br></li>
-		<li><button id="edit">Edit existing entries</button><br></li>
-		<li><button id="delete">Delete existing entries</button><br></li>
-	</ul>
 
-	<div id="add">
-		<form id="add" action="upload.php" method="POST" enctype="multipart/form-data">
-			Select image to upload:
-			<input type="file" name="fileToUpload" id="fileToUpload"><br><br>
-			<label for="desc">Image Description: </label><br>
-			<textarea id="desc" name="desc" rows="10" cols="50"></textarea><br><br>
-			<input type="submit"></button>
-		</form>
-	</div>
+	<body>
+		<h1>Edit Humans of Legacy</h1>
+		<ul id="options">
+			<li><button id="add">Add content</button><br></li>
+			<li><button id="edit">Edit existing entries</button><br></li>
+			<li><button id="delete">Delete existing entries</button><br></li>
+		</ul>
 
-	<div id="edit">
-		<form id="edit" action="edit.php" method="POST" enctype="multipart/form-data">
-			Select image to upload:
-			<input type="file" name="fileToUpload" id="fileToUpload"><br><br>
-			<label for="desc">Image Description: </label><br>
-			<textarea id="desc" name="desc" rows="10" cols="50"></textarea><br><br>
-			<input type="submit"></button>
-		</form>
-	</div>
+		<div id="add">
+			<form id="add" action="upload.php" method="POST" enctype="multipart/form-data">
+				Select image to upload:
+				<input type="file" name="fileToUpload" id="fileToUpload"><br><br>
+				<label for="desc">Image Description: </label><br>
+				<textarea id="desc" name="desc" rows="10" cols="50"></textarea><br><br>
+				<input type="submit"></button>
+			</form>
+		</div>
 
-	<div id="delete">
-		<form id="delete" action="delete.php" method="POST" enctype="multipart/form-data">
-			<label for="id">Post ID</label>
-			<input type="text" name="id" id="id"><br><br>
-			<input type="submit" value="Delete"></button>
-		</form>
-	</div>
+		<div id="edit">
+			<form id="edit" action="edit.php" method="POST" enctype="multipart/form-data">
+				Select image to upload:
+				<input type="file" name="fileToUpload" id="fileToUpload"><br><br>
+				<label for="desc">Image Description: </label><br>
+				<textarea id="desc" name="desc" rows="10" cols="50"></textarea><br><br>
+				<input type="submit"></button>
+			</form>
+		</div>
 
-	<!-- Deprecated by PHP (left for reference)
-			<script type="text/javascript">
-				async function postData(url, data) {
-					const response = await fetch(url, {
-						method: 'POST',
-						mode: 'cors',
-						headers: {
-							'Content-Type': 'application/json'
-						},
-						body: JSON.stringify(data)
-					});
-
-					return response.status;
-				}
-				document.getElementById("form").addEventListener("submit", submit)
-
-				function submit(event) {
-					let img = document.getElementById("img").value;
-					let desc = document.getElementById("desc").value;
-					let body = {
-						"img": img, 
-						"desc": desc
-					};
-
-					event.preventDefault();
-					postData("https://lhs-humans.glitch.me/update", body)
-						.then(data => {
-							if (data == 200) alert("success");
-						})
-				}
-			</script>
-			-->
-
+		<div id="delete">
+			<form id="delete" action="delete.php" method="POST" enctype="multipart/form-data">
+				<label for="id">Post ID</label>
+				<input type="text" name="id" id="id"><br><br>
+				<input type="submit" value="Delete"></button>
+			</form>
+		</div>
+	</body>
 </html>
