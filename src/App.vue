@@ -1,6 +1,6 @@
 <template>
 	<div id="app">
-		<Post v-bind:items="items" />
+		<Post :items="items" />
 	</div>
 </template>
 
@@ -22,7 +22,7 @@ export default class App extends Vue {
 			.then(data => {
 				this.items = data.items;
 			});
-	};
+	}
 }
 </script>
 
@@ -30,7 +30,7 @@ export default class App extends Vue {
 body {
 	margin: 10px;
 	padding: 5px;
-	color: #231F20;
+	color: #231f20;
 	background: #efefef;
 	font-family: 'Proxima Nova', sans-serif;
 	font-size: 1em;

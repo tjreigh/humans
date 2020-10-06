@@ -8,9 +8,7 @@ import { JSONDB } from './jsondb';
 const app = express();
 const port = 8080;
 
-app.use(bodyParser.urlencoded({
-	extended: false,
-}));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 
@@ -31,7 +29,7 @@ app.post('/add', (req, res) => {
 	}) */
 
 	const obj = {
-		id: (db.data.items[0].id + 1),
+		id: db.data.items[0].id + 1,
 		img: req.body.img,
 		desc: req.body.desc,
 	};

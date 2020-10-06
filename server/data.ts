@@ -9,15 +9,14 @@ export class DataController {
 		open({
 			filename: path,
 			driver: Database,
-		}).then(db => this.db = db);
+		}).then(db => (this.db = db));
 	}
 
 	get data(): Array<Item> {
 		const arr: Item[] = [];
-		this.db.get(`SELECT * FROM items`)
-			.then(row => {
-				arr.push(row);
-			});
+		this.db.get(`SELECT * FROM items`).then(row => {
+			arr.push(row);
+		});
 		return arr;
 	}
 

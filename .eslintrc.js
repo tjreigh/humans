@@ -1,28 +1,31 @@
 module.exports = {
-  root: true,
-  env: {
+	root: true,
+	env: {
 		node: true,
-		es6: true
-  },
-  extends: [
-		'standard',
-    'plugin:vue/essential',
-    '@vue/standard',
-    '@vue/typescript/recommended',
+		es6: true,
+	},
+	extends: [
+		'plugin:vue/essential',
+		'@vue/eslint-config-prettier',
+		'@vue/typescript/recommended',
+		'plugin:@typescript-eslint/recommended',
+		'prettier/@typescript-eslint',
+		'plugin:prettier/recommended',
 	],
-  parserOptions: {
-    ecmaVersion: 2020
-  },
-  rules: {
-    'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+	parser: 'vue-eslint-parser',
+	parserOptions: {
+		parser: '@typescript-eslint/parser',
+		ecmaVersion: 2020,
+	},
+	rules: {
+		'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
 		'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-		'semi': ['error', 'always'],
-		'quotes': ['error', 'single'],
-		'indent': ['error', 'tab'],
-		'no-tabs': 'off',
-		'comma-dangle': ['warn', 'always-multiline'],
 		'no-unused-vars': 'warn',
-		'space-before-function-paren': 'off',
-		'spaced-comment': 'off',
-  }
-}
+		'array-callback-return': 'error',
+		'no-extra-bind': 'error',
+		'no-fallthrough': 'error',
+		'@typescript-eslint/explicit-function-return-type': 'off',
+		'@typescript-eslint/no-explicit-any': 'off',
+		eqeqeq: ['warn', 'smart']
+	},
+};
