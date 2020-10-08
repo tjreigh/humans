@@ -1,17 +1,18 @@
 <template>
 	<div>
-		<router-view>
-			<p>This is the modal with id {{ $route.params.id }}</p>
-		</router-view>
+		<p>This is the modal with id {{ id }}</p>
+		<router-view />
 	</div>
 </template>
 
-<script>
+<script lang="ts">
 import Vue from 'vue';
-import { Component } from 'vue-property-decorator';
+import { Component, Prop } from 'vue-property-decorator';
 
 @Component
-export default class PostModal extends Vue {}
+export default class PostModal extends Vue {
+	@Prop() private id!: number;
+}
 </script>
 
 <style></style>

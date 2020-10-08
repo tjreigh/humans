@@ -1,29 +1,20 @@
 <template>
 	<div id="app">
-		<Post :items="items" />
+		<router-view />
+		<!-- <Post :items="items" /> -->
 	</div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import Post from './components/Post.vue';
-import { Item } from '../types/item';
 
 @Component({
 	components: {
 		Post,
 	},
 })
-export default class App extends Vue {
-	items: Item[] = [];
-	created() {
-		fetch('https://lhs-humans.glitch.me/data')
-			.then(res => res.json())
-			.then(data => {
-				this.items = data.items;
-			});
-	}
-}
+export default class App extends Vue {}
 </script>
 
 <style>

@@ -1,21 +1,14 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import App from './App.vue';
-import PostModal from './components/PostModal.vue';
+import { router } from './router';
 
 Vue.config.productionTip = false;
 
-const router = new VueRouter({
-	routes: [
-		{
-			path: '/post/:id',
-			name: 'PostModal',
-			component: PostModal,
-		},
-	],
-});
+Vue.use(VueRouter);
 
 new Vue({
+	el: '#app',
 	render: h => h(App),
 	router,
 }).$mount('#app');

@@ -20,12 +20,12 @@ module.exports = {
 	rules: {
 		'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
 		'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-		'no-unused-vars': 'warn',
 		'array-callback-return': 'error',
 		'no-extra-bind': 'error',
 		'no-fallthrough': 'error',
 		'@typescript-eslint/explicit-function-return-type': 'off',
 		'@typescript-eslint/no-explicit-any': 'off',
-		eqeqeq: ['warn', 'smart']
+		'@typescript-eslint/no-unused-vars': 'warn',
+		eqeqeq: ['warn', 'smart'],
 	},
 };

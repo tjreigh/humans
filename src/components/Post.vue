@@ -1,8 +1,8 @@
 <template>
 	<!-- all your div are belong to us -->
 	<div id="posts">
-		<div id="loader"></div>
-		<div class="container">
+		<div class="loader" :class="{ hidden: !showLoader }"></div>
+		<div class="container" :class="{ hidden: !showPosts }">
 			<div class="post" v-for="item in items" :key="item.id" @click="openModal(item.id)" :title="item.id">
 				<div class="postContent">
 					<img class="postImg" :src="item.img" />
@@ -12,60 +12,85 @@
 				</div>
 			</div>
 		</div>
+		<router-view />
 	</div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import { Component, Prop, Watch } from 'vue-property-decorator';
+import { Component, Watch } from 'vue-property-decorator';
 import { Item } from '../../types/item';
 
 @Component
 export default class Post extends Vue {
-	@Prop({ required: true })
-	private items!: Item[];
+	private items: Item[] = [];
+	private showLoader = true;
+	private showPosts = false;
 
-	openModal(id: number) {
-		this.$router.push({ path: `/post/${id}` });
+	beforeCreate() {
+		fetch('https://lhs-humans.glitch.me/data')
+			.then(res => res.json())
+			.then(data => {
+				this.items = data.items.map((item: Item) => {
+					// Append domain to paths without it, ignore paths that already have domain
+					if (item.img.match(/^\/?media\//)) item.img = `https://legacystudentmedia.com/${item.img}`;
+					return item;
+				});
+			});
 	}
 
-	@Watch('items')
-	dataLoaded(newData: Item[], oldData: Item[]) {
-		const loader = document.querySelector('#loader') as HTMLElement;
-		const postContainer = document.querySelector('div.container') as HTMLElement;
+	mounted() {
+		window.addEventListener('resize', this.resizeAllGridItems);
+	}
 
-		loader.style.display = 'none';
-		postContainer.style.display = 'grid';
+	openModal(id: number) {
+		this.showPosts = false;
+		this.$router.push({ name: 'Post', params: { id: `${id}` } });
+	}
+
+	// Hide loader once items load
+	@Watch('items')
+	dataLoaded(newItems: Item[]) {
+		if (newItems.length < 0) return;
+
+		this.toggleVisibility();
+
+		setTimeout(this.resizeAllGridItems, 350);
+	}
+
+	toggleVisibility() {
+		this.showLoader = !this.showLoader;
+		this.showPosts = !this.showPosts;
 	}
 
 	/* The following code is a disgusting "migration" from vanilla JS
-		 Please refrain from informing me just how awful it is.
-		 Trust me, I know. I wrote it. */
-	resizeGridItem = (item: HTMLElement) => {
-		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-		const grid = document.querySelector('div.container') as HTMLElement; // Yes this assertion is stupid
-		const rowHeight = parseInt(window.getComputedStyle(grid)?.getPropertyValue('grid-auto-rows'));
-		const rowGap = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-row-gap'));
-		const rowSpan = Math.ceil((item.children[0].getBoundingClientRect().height + rowGap) / (rowHeight + rowGap)) ?? 0;
+		 Masonry layout using CSS grid
+		 Make many small grid rows, calculate how many rows each element should span
+		 TODO: rewrite in SAAS/scss? */
+	resizeGridItem(item: HTMLElement) {
+		const postContainer = document.querySelector('div.container') as Element;
+		const rowHeight = parseInt(window.getComputedStyle(postContainer)?.getPropertyValue('grid-auto-rows'));
+		const rowGap = parseInt(window.getComputedStyle(postContainer)?.getPropertyValue('grid-row-gap'));
+		const rowSpan = Math.ceil((item.children[0]?.getBoundingClientRect().height + rowGap) / (rowHeight + rowGap)) ?? 0;
 		item.style.gridRowEnd = `span ${rowSpan}`;
-	};
+	}
 
-	resizeAllGridItems = () => {
+	resizeAllGridItems() {
+		console.log('resize');
+		this.showPosts = false;
+
 		const allItems = document.getElementsByClassName('post');
 		for (let x = 0; x < allItems.length; x++) {
-			this.resizeGridItem(allItems[x] as HTMLElement); // Assert to HTMLElement for style property
+			this.resizeGridItem(allItems[x] as HTMLElement);
 		}
-	};
 
-	mounted() {
-		setTimeout(this.resizeAllGridItems, 350);
-		window.addEventListener('resize', this.resizeAllGridItems);
+		this.showPosts = true;
 	}
 }
 </script>
 
 <style scoped>
-#loader {
+.loader {
 	position: absolute;
 	left: 50%;
 	top: 50%;
@@ -81,11 +106,16 @@ export default class Post extends Vue {
 	animation: spin 2s linear infinite;
 	-webkit-animation: spin 2s linear infinite;
 }
+
+.hidden {
+	display: none;
+}
+
 .container {
 	position: relative;
 	z-index: 0;
 	top: 30;
-	display: none;
+	display: grid;
 	grid-column-gap: 50px;
 	grid-row-gap: 20px;
 	grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
