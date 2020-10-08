@@ -1,4 +1,4 @@
-# hums-vue
+# humans
 Custom redesign of Legacy Student Media's Humans of Legacy Page. Written to replace the original tumblr version.<br/>
 Written in Typescript with Vue.js frontend and small Node.js server.<br/>
 Some PHP for serverless interfacing with web server (file uploads, etc)
