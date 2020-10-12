@@ -18,6 +18,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import 'reflect-metadata';
 import { Component, Watch } from 'vue-property-decorator';
 import { Item } from '../../types/item';
 
@@ -28,15 +29,8 @@ export default class Post extends Vue {
 	private showPosts = false;
 
 	beforeCreate() {
-		fetch('https://lhs-humans.glitch.me/data')
-			.then(res => res.json())
-			.then(data => {
-				this.items = data.items.map((item: Item) => {
-					// Append domain to paths without it, ignore paths that already have domain
-					if (item.img.match(/^\/?media\//)) item.img = `https://legacystudentmedia.com/${item.img}`;
-					return item;
-				});
-			});
+		console.log(this.$store.state);
+		this.items = this.$store.getters.items;
 	}
 
 	mounted() {
@@ -45,6 +39,7 @@ export default class Post extends Vue {
 
 	openModal(id: number) {
 		this.showPosts = false;
+
 		this.$router.push({ name: 'Post', params: { id: `${id}` } });
 	}
 

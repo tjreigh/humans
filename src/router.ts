@@ -1,8 +1,11 @@
+import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Post from './components/Post.vue';
 import PostModal from './components/PostModal.vue';
 
-export const router = new VueRouter({
+Vue.use(VueRouter);
+
+export default new VueRouter({
 	routes: [
 		{
 			path: '/post/:id',
