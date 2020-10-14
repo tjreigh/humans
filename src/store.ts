@@ -2,35 +2,41 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import { Item } from '../types/item';
 
+/* DISCLAIMER: Vuex is not strictly necessary for this app
+	 I could pass items around as props, but things get messy on reload
+	 Using state management makes things cleaner overall and more scalable
+*/
+
 Vue.use(Vuex);
 
-const getItems = async () => {
-	let its: Item[] = [];
-	await fetch('https://lhs-humans.glitch.me/data')
+const getItems = () =>
+	fetch('https://lhs-humans.glitch.me/data')
 		.then(res => res.json())
-		.then(data => {
-			its = data.items.map((item: Item) => {
+		.then(data =>
+			data.items.map((item: Item) => {
 				// Append domain to paths without it, ignore paths that already have domain
 				if (item.img.match(/^\/?media\//)) item.img = `https://legacystudentmedia.com/${item.img}`;
 				return item;
-			});
-			return data;
-		});
-	return its;
-};
-let items: Item[] = [];
-getItems().then(its => (items = its));
+			})
+		);
 
 export default new Vuex.Store({
 	state: {
-		items: items,
+		items: [] as Item[],
 	},
 	getters: {
-		allItems: state => {
-			return state.items;
+		oneItem: state => (id: number): Item | undefined => {
+			return state.items.find(itm => itm.id === id);
 		},
-		oneItem: state => (id: number) => {
-			return state.items.find((itm: Item) => itm.id === id);
+	},
+	mutations: {
+		setItems(state, items) {
+			state.items = items;
+		},
+	},
+	actions: {
+		async fetchItems({ commit }) {
+			commit('setItems', await getItems());
 		},
 	},
 });

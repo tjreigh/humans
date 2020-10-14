@@ -24,16 +24,19 @@ import { Item } from '../../types/item';
 
 @Component
 export default class Post extends Vue {
-	private items: Item[] = [];
 	private showLoader = true;
 	private showPosts = false;
 
+	get items(): Item[] {
+		return this.$store.state.items;
+	}
+
 	beforeCreate() {
-		console.log(this.$store.state);
-		this.items = this.$store.getters.items;
+		this.$store.dispatch('fetchItems');
 	}
 
 	mounted() {
+		this.$emit('toggle-header', true);
 		window.addEventListener('resize', this.resizeAllGridItems);
 	}
 
@@ -48,14 +51,10 @@ export default class Post extends Vue {
 	dataLoaded(newItems: Item[]) {
 		if (newItems.length < 0) return;
 
-		this.toggleVisibility();
+		this.showLoader = false;
+		this.showPosts = true;
 
 		setTimeout(this.resizeAllGridItems, 350);
-	}
-
-	toggleVisibility() {
-		this.showLoader = !this.showLoader;
-		this.showPosts = !this.showPosts;
 	}
 
 	/* The following code is a disgusting "migration" from vanilla JS
@@ -85,6 +84,10 @@ export default class Post extends Vue {
 </script>
 
 <style scoped>
+#posts {
+	margin: 15px;
+}
+
 .loader {
 	position: absolute;
 	left: 50%;
@@ -102,10 +105,6 @@ export default class Post extends Vue {
 	-webkit-animation: spin 2s linear infinite;
 }
 
-.hidden {
-	display: none;
-}
-
 .container {
 	position: relative;
 	z-index: 0;
@@ -119,6 +118,7 @@ export default class Post extends Vue {
 
 .post {
 	position: relative;
+	cursor: pointer;
 }
 
 .desc {

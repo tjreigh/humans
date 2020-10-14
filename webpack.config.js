@@ -1,8 +1,14 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+/* eslint-disable @typescript-eslint/no-var-requires */
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const webpack = require('webpack');
 
 module.exports = {
 	entry: './src/App.vue',
+	devtool: 'eval-source-map',
+	devServer: {
+		contentBase: './dist',
+		hot: true,
+	},
 	output: {
 		path: `${__dirname}/dist`,
 		filename: 'build.js',
@@ -32,5 +38,6 @@ module.exports = {
 	plugins: [
 		// make sure to include the plugin!
 		new VueLoaderPlugin(),
+		new webpack.HotModuleReplacementPlugin(),
 	],
 };

@@ -1,14 +1,17 @@
 <template>
 	<div id="app">
-		<div class="header">
+		<div class="header" :class="{ hidden: !showHeader }">
 			<div class="exit">
 				<button class="exitBtn" onclick="window.location.href = 'https://therideronline.com';">Home</button>
 			</div>
 			<div class="heading" align="center">
-				<img src="logo.png" style="width:100%; max-height: 300px; max-width: 700px" />
+				<img
+					src="https://legacystudentmedia.com/media/logo.png"
+					style="width:100%; max-height: 300px; max-width: 700px"
+				/>
 			</div>
 		</div>
-		<router-view />
+		<router-view @toggle-header="toggleHeader" />
 	</div>
 </template>
 
@@ -21,7 +24,14 @@ import Post from './components/Post.vue';
 		Post,
 	},
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+	private showHeader = true;
+
+	toggleHeader(headerState: boolean) {
+		this.showHeader = headerState;
+		console.log(`header toggled to ${headerState}`);
+	}
+}
 </script>
 
 <style>
@@ -37,6 +47,10 @@ body {
 	overflow-x: hidden;
 }
 
+.hidden {
+	display: none;
+}
+
 .header {
 	padding: 15px;
 	position: sticky;
@@ -46,7 +60,7 @@ body {
 	grid-template-columns: 20% [title] auto [title-end] 15%;
 	width: 100%;*/
 	background: #d52526;
-	z-index: 1;
+	z-index: 10;
 }
 
 .exit {
