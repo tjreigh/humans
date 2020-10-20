@@ -16,14 +16,8 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import Post from './components/Post.vue';
+import { Vue } from 'vue-class-component';
 
-@Component({
-	components: {
-		Post,
-	},
-})
 export default class App extends Vue {
 	private showHeader = true;
 

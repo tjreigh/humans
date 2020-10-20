@@ -17,28 +17,29 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
 import 'reflect-metadata';
-import { Component, Watch } from 'vue-property-decorator';
+import { beforeCreate, onMounted } from 'vue';
+import { Vue } from 'vue-class-component';
+import { Watch } from 'vue-property-decorator';
+import { store } from '../store';
 import { Item } from '../../types/item';
 
-@Component
 export default class Post extends Vue {
 	private showLoader = true;
 	private showPosts = false;
-
-	get items(): Item[] {
-		return this.$store.state.items;
-	}
+	private items = [] as Item[];
 
 	beforeCreate() {
-		this.$store.dispatch('fetchItems');
+		async () => {
+			this.items = await store.getState().items;
+			console.log(`items: ${this.items}`);
+		};
 	}
 
-	mounted() {
+	onMounted(() => {
 		this.$emit('toggle-header', true);
 		window.addEventListener('resize', this.resizeAllGridItems);
-	}
+	}).bind(this);
 
 	openModal(id: number) {
 		this.showPosts = false;

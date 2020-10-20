@@ -10,21 +10,24 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
 import 'reflect-metadata';
-import { Component, Prop, Watch } from 'vue-property-decorator';
+import { Vue } from 'vue-class-component';
+import { Prop, Watch } from 'vue-property-decorator';
+import { store } from '../store';
 import { Item } from '../../types/item';
 
-@Component
 export default class PostModal extends Vue {
-	@Prop({ type: String, required: true }) id: string = this.$route.params.id;
+	@Prop({ type: String, required: true }) id: string = this.$route.params.id[0];
 	private item!: Item;
+	private items = [] as Item[];
 	private title = this.item?.id ?? '';
 	private img = this.item?.img ?? '';
 	private desc = this.item?.desc ?? '';
 
 	beforeCreate() {
-		this.$store.dispatch('fetchItems');
+		async () => {
+			this.items = await store.getState().items;
+		};
 	}
 
 	mounted() {
@@ -34,8 +37,7 @@ export default class PostModal extends Vue {
 	@Watch('item', { immediate: true })
 	itemChange() {
 		console.log('itemChange');
-		console.log(this.$store);
-		const item: Item = this.$store.getters.oneItem(parseInt(`${this.id}`));
+		const item: Item = store.oneItem(parseInt(this.id))!;
 		console.log(item);
 		this.setProps(item);
 		return item;
