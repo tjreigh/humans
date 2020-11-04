@@ -2,7 +2,7 @@ import path from 'path';
 import { Item, ItemStore } from '../../types/item';
 import { JSONDB } from './jsondb';
 
-export const db = new JSONDB<ItemStore>(path.join(__dirname, '../items.json'), {
+export const db = new JSONDB<ItemStore>(path.join(__dirname, '_files', 'items.json'), {
 	items: [],
 });
 

@@ -1,0 +1,7 @@
+{
+	"functions": {
+		"api/util/db.ts": {
+			"includeFiles": "_files/**"
+		}
+	}
+}
