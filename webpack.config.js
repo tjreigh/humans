@@ -6,8 +6,9 @@ module.exports = {
 	entry: './src/App.vue',
 	devtool: 'eval-source-map',
 	devServer: {
-		contentBase: './dist',
+		contentBase: './public',
 		hot: true,
+		port: 5000,
 	},
 	output: {
 		path: `${__dirname}/dist`,

@@ -10,7 +10,7 @@ import { Item } from '../types/item';
 Vue.use(Vuex);
 
 const getItems = () =>
-	fetch('https://lhs-humans.glitch.me/data')
+	fetch('/api/data')
 		.then(res => res.json())
 		.then(data =>
 			data.items.map((item: Item) => {
