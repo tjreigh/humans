@@ -24,6 +24,7 @@ module.exports = {
 		'no-extra-bind': 'error',
 		'no-fallthrough': 'error',
 		'@typescript-eslint/explicit-function-return-type': 'off',
+		'@typescript-eslint/interface-name-prefix': 'off',
 		'@typescript-eslint/no-explicit-any': 'off',
 		'@typescript-eslint/no-unused-vars': 'warn',
 		eqeqeq: ['warn', 'smart'],

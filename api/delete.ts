@@ -1,15 +1,16 @@
 import { NowRequest, NowResponse } from '@vercel/node';
 import { db } from './util/db';
+import { cleanBody } from './add';
 
-export default (req: NowRequest, res: NowResponse) => {
-	const { body } = req;
-	const clean = JSON.parse(body);
+export default async (req: NowRequest, res: NowResponse) => {
+	if (req.method?.toUpperCase() !== 'DELETE')
+		return res.status(405).send('Invalid HTTP method (expected DELETE)');
 
-	const item = db.data.items.find(item => item.id === clean.id);
-	if (!item) return res.status(404).send(`Item with id ${clean.id} does not exist`);
+	const body = cleanBody(req, res);
 
-	db.data.items = db.data.items.filter(item => item.id !== clean.id);
+	const item = await db.get(body.id);
+	if (!item) return res.status(404).send(`Item with id ${body.id} does not exist`);
 
-	db.sync();
+	await db.delete(body.id);
 	res.json(item);
 };

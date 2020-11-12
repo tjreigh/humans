@@ -1,11 +1,4 @@
-import path from 'path';
-import { Item, ItemStore } from '../../types/item';
-import { JSONDB } from './jsondb';
-
-export const db = new JSONDB<ItemStore>(path.join(__dirname, '_files', 'items.json'), {
-	items: [],
-});
-
-export const findItem = (id: number): Item | undefined => {
-	return db.data.items.find(item => item.id === id);
-};
+import { Deta } from 'deta';
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+const deta = Deta(process.env.DETA_KEY!);
+export const db = deta.Base('humans');
