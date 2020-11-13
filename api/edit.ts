@@ -1,9 +1,10 @@
 import { NowRequest, NowResponse } from '@vercel/node';
+import { DetaBaseUpdates } from 'deta';
 import { Item } from '../types/item';
 import { db } from './util/db';
-import { cleanBody } from './add';
-import { DetaBaseUpdates } from 'deta';
+import { cleanBody } from './util/funcs';
 
+// TODO: handle updates for nonexistent props
 export default async (req: NowRequest, res: NowResponse) => {
 	if (req.method?.toUpperCase() !== 'PUT')
 		return res.status(405).send('Invalid HTTP method (expected PUT)');

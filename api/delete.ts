@@ -1,6 +1,6 @@
 import { NowRequest, NowResponse } from '@vercel/node';
 import { db } from './util/db';
-import { cleanBody } from './add';
+import { cleanBody } from './util/funcs';
 
 export default async (req: NowRequest, res: NowResponse) => {
 	if (req.method?.toUpperCase() !== 'DELETE')

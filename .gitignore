@@ -2,6 +2,7 @@
 node_modules
 /dist
 /media
+api/items.json
 
 # local env files
 .env.local

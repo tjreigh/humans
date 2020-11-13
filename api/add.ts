@@ -1,32 +1,14 @@
 import { NowRequest, NowResponse } from '@vercel/node';
 import { Item } from '../types/item';
 import { db } from './util/db';
-
-export const cleanBody = (req: NowRequest, res: NowResponse) => {
-	const { body } = req;
-	let clean;
-
-	try {
-		clean = JSON.parse(body);
-	} catch {
-		return res.status(400).send('Malformed JSON');
-	}
-
-	return clean;
-};
-
-interface IDObj {
-	id: number;
-}
+import { cleanBody, getNextId, incNextId } from './util/funcs';
 
 export default async (req: NowRequest, res: NowResponse) => {
 	if (req.method?.toUpperCase() !== 'POST')
 		return res.status(405).send('Invalid HTTP method (expected POST)');
 
 	const body: Item = cleanBody(req, res);
-
-	const idObj = (await db.get('nextId')) as IDObj;
-	const nextId = idObj.id;
+	const nextId = await getNextId();
 
 	const obj = {
 		id: nextId,
@@ -43,11 +25,7 @@ export default async (req: NowRequest, res: NowResponse) => {
 		return true;
 	});
 
-	const updates = {
-		id: db.util.increment(),
-	};
-
 	await db.put(obj, nextId.toString());
-	await db.update(updates, 'nextId');
+	await incNextId();
 	res.json(obj);
 };
