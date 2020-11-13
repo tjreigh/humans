@@ -2,12 +2,14 @@
 	<div id="app">
 		<div class="header" :class="{ hidden: !showHeader }">
 			<div class="exit">
-				<button class="exitBtn" onclick="window.location.href = 'https://therideronline.com';">Home</button>
+				<button class="exitBtn" onclick="window.location.href = 'https://therideronline.com';">
+					Home
+				</button>
 			</div>
 			<div class="heading" align="center">
 				<img
 					src="https://legacystudentmedia.com/media/logo.png"
-					style="width:100%; max-height: 300px; max-width: 700px"
+					style="width: 100%; max-height: 300px; max-width: 700px"
 				/>
 			</div>
 		</div>

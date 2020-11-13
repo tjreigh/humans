@@ -2,9 +2,15 @@
 	<!-- all your div are belong to us -->
 	<div id="posts">
 		<div class="loader" :class="{ hidden: !showLoader }"></div>
-		<div class="container" :class="{ hidden: !showPosts }">
-			<div class="post" v-for="item in items" :key="item.id" @click="openModal(item.id)" :title="item.id">
-				<div class="postContent">
+		<div class="container">
+			<div
+				class="post"
+				v-for="item in items"
+				:key="item.id"
+				:title="item.id"
+				@click="openModal(item.id)"
+			>
+				<div class="postContent" :class="{ hidden: !showPosts }">
 					<img class="postImg" :src="item.img" />
 					<div class="desc">
 						<p>{{ item.desc }}</p>
@@ -63,9 +69,16 @@ export default class Post extends Vue {
 		 TODO: rewrite in SAAS/scss? */
 	resizeGridItem(item: HTMLElement) {
 		const postContainer = document.querySelector('div.container') as Element;
-		const rowHeight = parseInt(window.getComputedStyle(postContainer)?.getPropertyValue('grid-auto-rows'));
-		const rowGap = parseInt(window.getComputedStyle(postContainer)?.getPropertyValue('grid-row-gap'));
-		const rowSpan = Math.ceil((item.children[0]?.getBoundingClientRect().height + rowGap) / (rowHeight + rowGap)) ?? 0;
+		const rowHeight = parseInt(
+			window.getComputedStyle(postContainer)?.getPropertyValue('grid-auto-rows')
+		);
+		const rowGap = parseInt(
+			window.getComputedStyle(postContainer)?.getPropertyValue('grid-row-gap')
+		);
+		const rowSpan =
+			Math.ceil(
+				(item.children[0]?.getBoundingClientRect().height + rowGap) / (rowHeight + rowGap)
+			) ?? 0;
 		item.style.gridRowEnd = `span ${rowSpan}`;
 	}
 
