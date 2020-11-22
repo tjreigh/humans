@@ -6,7 +6,7 @@ module.exports = {
 	entry: './src/App.vue',
 	devtool: 'eval-source-map',
 	devServer: {
-		contentBase: './public',
+		contentBase: './dist',
 		hot: true,
 		port: 5000,
 	},
@@ -26,7 +26,8 @@ module.exports = {
 				loader: 'vue-loader',
 			},
 			{
-				test: /\.ts$/,
+				test: /\.(js|ts)$/,
+				exclude: /node_modules/,
 				loader: 'ts-loader',
 				options: { appendTsSuffixTo: [/\.vue$/] },
 			},
@@ -41,4 +42,8 @@ module.exports = {
 		new VueLoaderPlugin(),
 		new webpack.HotModuleReplacementPlugin(),
 	],
+	node: {
+		Buffer: false,
+		process: false,
+	},
 };
