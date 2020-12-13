@@ -1,11 +1,10 @@
 import { NowRequest, NowResponse } from '@vercel/node';
 import { Item } from '../types/item';
 import { db } from './util/db';
-import { cleanBody, getNextId, incNextId } from './util/funcs';
+import { cleanBody, expectMethod, getNextId, incNextId } from './util/funcs';
 
 export default async (req: NowRequest, res: NowResponse) => {
-	if (req.method?.toUpperCase() !== 'POST')
-		return res.status(405).send('Invalid HTTP method (expected POST)');
+	expectMethod(req, res, 'POST');
 
 	const body: Item = cleanBody(req, res);
 	const nextId = await getNextId();

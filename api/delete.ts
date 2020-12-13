@@ -1,10 +1,9 @@
 import { NowRequest, NowResponse } from '@vercel/node';
 import { db } from './util/db';
-import { cleanBody } from './util/funcs';
+import { cleanBody, expectMethod } from './util/funcs';
 
 export default async (req: NowRequest, res: NowResponse) => {
-	if (req.method?.toUpperCase() !== 'DELETE')
-		return res.status(405).send('Invalid HTTP method (expected DELETE)');
+	expectMethod(req, res, 'DELETE');
 
 	const body = cleanBody(req, res);
 
