@@ -12,9 +12,11 @@
 		"@types/deta": "0.0.0",
 		"@vercel/node": "^1.8.5",
 		"@vue/eslint-config-prettier": "^6.0.0",
+		"cloudinary": "^1.23.0",
 		"core-js": "^3.6.5",
 		"deta": "^0.0.8",
 		"vue": "^2.6.11",
+		"vue-picture-input": "^2.1.6",
 		"vuex-persistedstate": "^4.0.0-beta.1"
 	},
 	"devDependencies": {
