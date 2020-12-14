@@ -4,7 +4,8 @@ node_modules
 /media
 api/items.json
 
-# local env files
+# env files
+.env
 .env.local
 .env.*.local
 
