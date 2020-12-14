@@ -1,10 +1,11 @@
 import { NowRequest, NowResponse } from '@vercel/node';
 import { db } from './util/db';
 import { Item } from '../types/item';
+import { expectMethod } from './util/funcs';
 
 export default async (req: NowRequest, res: NowResponse) => {
-	if (req.method?.toUpperCase() !== 'GET')
-		return res.status(405).send('Invalid HTTP method (expected GET)');
+	if (!db) return;
+	expectMethod(req, res, 'GET');
 
 	const results = await db.fetch();
 	const data: Item[] = [];
@@ -13,5 +14,5 @@ export default async (req: NowRequest, res: NowResponse) => {
 		data.push(result as any);
 	}
 
-	res.json(data);
+	res.json(data.flat());
 };

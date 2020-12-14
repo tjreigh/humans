@@ -11,6 +11,7 @@ interface _IDObj {
  * @returns The nextId value from the database
  */
 export const getNextId = async () => {
+	if (!db) return;
 	const idObj = (await db.get('nextId')) as _IDObj;
 	return idObj?.id ?? 0;
 };
@@ -22,6 +23,7 @@ export const getNextId = async () => {
  * @returns The value nextId is set to
  */
 export const incNextId = async (base?: number) => {
+	if (!db) return;
 	// Add nextId to db if doesn't already exist
 	if ((await getNextId()) === 0) {
 		await db.put({ id: 1 }, 'nextId');
@@ -51,6 +53,7 @@ export const cleanBody = (req: NowRequest, res: NowResponse) => {
 };
 
 export const purge = async () => {
+	if (!db) return;
 	const results = await db.fetch();
 	const data: Array<Item[]> = [];
 
@@ -59,7 +62,7 @@ export const purge = async () => {
 	}
 
 	for await (const item of data) {
-		item.forEach(async item => await db.delete(item.id.toString()));
+		item.forEach(async item => await db?.delete(item.id.toString()));
 		//await db.delete(item.id.toString());
 	}
 };

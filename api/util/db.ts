@@ -1,4 +1,17 @@
-import { Deta } from 'deta';
-const deta = Deta(process.env.DETA_KEY!);
-export const db = deta.Base('humans');
-export const auth = deta.Base('auth');
+import { Deta, DetaBase, DetaInstance } from 'deta';
+
+const key = process.env?.DETA_KEY;
+let deta: DetaInstance;
+let db: DetaBase | null = null;
+let auth: DetaBase | null = null;
+
+// Disclaimer: this is not good
+try {
+	deta = Deta(key!);
+	db = deta.Base('humans');
+	auth = deta.Base('auth');
+} catch (e) {
+	console.error(`Failed to register Deta instance: ${e}`);
+}
+
+export { db, auth };

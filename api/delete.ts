@@ -3,6 +3,7 @@ import { db } from './util/db';
 import { cleanBody, expectMethod } from './util/funcs';
 
 export default async (req: NowRequest, res: NowResponse) => {
+	if (!db) return;
 	expectMethod(req, res, 'DELETE');
 
 	const body = cleanBody(req, res);

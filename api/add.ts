@@ -4,10 +4,11 @@ import { db } from './util/db';
 import { cleanBody, expectMethod, getNextId, incNextId } from './util/funcs';
 
 export default async (req: NowRequest, res: NowResponse) => {
+	if (!db) return;
 	expectMethod(req, res, 'POST');
 
 	const body: Item = cleanBody(req, res);
-	const nextId = await getNextId();
+	const nextId = (await getNextId()) ?? 0;
 
 	const obj = {
 		id: nextId,

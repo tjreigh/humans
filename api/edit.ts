@@ -6,6 +6,7 @@ import { cleanBody, expectMethod } from './util/funcs';
 
 // TODO: handle updates for nonexistent props
 export default async (req: NowRequest, res: NowResponse) => {
+	if (!db) return;
 	expectMethod(req, res, 'PUT');
 
 	const body = cleanBody(req, res);
