@@ -42,8 +42,4 @@ module.exports = {
 		new VueLoaderPlugin(),
 		new webpack.HotModuleReplacementPlugin(),
 	],
-	node: {
-		Buffer: false,
-		process: false,
-	},
 };

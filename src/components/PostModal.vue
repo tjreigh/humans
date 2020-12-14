@@ -18,7 +18,7 @@ import { Item } from '../../types/item';
 @Component
 export default class PostModal extends Vue {
 	@Prop({ type: String, required: true }) id: string = this.$route.params.id;
-	private item!: Item;
+	private item: Item = this.$store.state.single;
 	private title = this.item?.id ?? '';
 	private img = this.item?.img ?? '';
 	private desc = this.item?.desc ?? '';

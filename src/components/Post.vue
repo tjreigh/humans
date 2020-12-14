@@ -6,14 +6,14 @@
 			<div
 				class="post"
 				v-for="item in items"
-				:key="item.id"
-				:title="item.id"
-				@click="openModal(item.id)"
+				:key="getSafe(() => item.id)"
+				:title="getSafe(() => item.id)"
+				@click="openModal(getSafe(() => item.id))"
 			>
 				<div class="postContent" :class="{ hidden: !showPosts }">
-					<img class="postImg" :src="item.img" />
+					<img class="postImg" :src="getSafe(() => item.img)" />
 					<div class="desc">
-						<p>{{ item.desc }}</p>
+						<p>{{ getSafe(() => item.desc) }}</p>
 					</div>
 				</div>
 			</div>
