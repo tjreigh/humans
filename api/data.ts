@@ -1,9 +1,9 @@
 import { NowRequest, NowResponse } from '@vercel/node';
 import { db } from './util/db';
 import { Item } from '../types/item';
-import { expectMethod } from './util/funcs';
+import { expectMethod, VercelFunc } from './util/funcs';
 
-export default async (req: NowRequest, res: NowResponse) => {
+export default async (req: NowRequest, res: NowResponse): VercelFunc => {
 	if (!db) return;
 	expectMethod(req, res, 'GET');
 
@@ -14,5 +14,5 @@ export default async (req: NowRequest, res: NowResponse) => {
 		data.push(result as any);
 	}
 
-	res.json(data.flat());
+	return res.json(data.flat());
 };

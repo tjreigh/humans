@@ -2,10 +2,10 @@ import { NowRequest, NowResponse } from '@vercel/node';
 import { DetaBaseUpdates } from 'deta';
 import { Item } from '../types/item';
 import { db } from './util/db';
-import { cleanBody, expectMethod } from './util/funcs';
+import { cleanBody, expectMethod, VercelFunc } from './util/funcs';
 
 // TODO: handle updates for nonexistent props
-export default async (req: NowRequest, res: NowResponse) => {
+export default async (req: NowRequest, res: NowResponse): VercelFunc => {
 	if (!db) return;
 	expectMethod(req, res, 'PUT');
 

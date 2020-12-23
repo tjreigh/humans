@@ -1,14 +1,14 @@
 import { NowRequest, NowResponse } from '@vercel/node';
 import { Item } from '../types/item';
 import { db } from './util/db';
-import { cleanBody, expectMethod, getNextId, incNextId } from './util/funcs';
+import { cleanBody, expectMethod, getNextId, incNextId, VercelFunc } from './util/funcs';
 
-export default async (req: NowRequest, res: NowResponse) => {
+export default async (req: NowRequest, res: NowResponse): VercelFunc => {
 	if (!db) return;
 	expectMethod(req, res, 'POST');
 
 	const body: Item = cleanBody(req, res);
-	const nextId = (await getNextId()) ?? 0;
+	const nextId = ((await getNextId()) as number) ?? 0;
 
 	const obj = {
 		id: nextId,

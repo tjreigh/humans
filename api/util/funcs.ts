@@ -1,4 +1,4 @@
-import { NowRequest, NowResponse } from '@vercel/node';
+import { NowRequest, NowRequestBody, NowResponse } from '@vercel/node';
 import { Item } from '../../types/item';
 import { db } from './db';
 
@@ -6,11 +6,13 @@ interface _IDObj {
 	id: number;
 }
 
+export type VercelFunc = Promise<NowResponse | undefined>;
+
 /**
  * Fetches the nextId value from the database
  * @returns The nextId value from the database
  */
-export const getNextId = async () => {
+export const getNextId = async (): Promise<number | void> => {
 	if (!db) return;
 	const idObj = (await db.get('nextId')) as _IDObj;
 	return idObj?.id ?? 0;
@@ -22,7 +24,7 @@ export const getNextId = async () => {
  * if not provided, existing value will be incremented
  * @returns The value nextId is set to
  */
-export const incNextId = async (base?: number) => {
+export const incNextId = async (base?: number): Promise<number | void> => {
 	if (!db) return;
 	// Add nextId to db if doesn't already exist
 	if ((await getNextId()) === 0) {
@@ -44,7 +46,7 @@ export const incNextId = async (base?: number) => {
  * @param res - Vercel serverless function response object
  * @returns If parsing succeeds, returns parsed body; otherwise returns HTTP 400 response
  */
-export const cleanBody = (req: NowRequest, res: NowResponse) => {
+export const cleanBody = (req: NowRequest, res: NowResponse): NowRequestBody | NowResponse => {
 	try {
 		return JSON.parse(req.body);
 	} catch {
@@ -52,7 +54,7 @@ export const cleanBody = (req: NowRequest, res: NowResponse) => {
 	}
 };
 
-export const purge = async () => {
+export const purge = async (): Promise<void> => {
 	if (!db) return;
 	const results = await db.fetch();
 	const data: Array<Item[]> = [];
@@ -74,12 +76,21 @@ export const purge = async () => {
  * @param method - Expected HTTP method
  * @returns If method does not match, returns HTTP 405 response with expected method
  */
-export const expectMethod = (req: NowRequest, res: NowResponse, method: string) => {
+export const expectMethod = (
+	req: NowRequest,
+	res: NowResponse,
+	method: string
+): void | NowResponse => {
 	if (req.method?.toUpperCase() !== method)
 		return res.status(405).send(`Invalid HTTP method (expected ${method})`);
 };
 
-export const isItem = (item: any): item is Item => {
+export const expectAuth = (req: NowRequest, res: NowResponse): void | NowResponse => {
+	if (!req.headers?.authorization?.startsWith('Basic'))
+		return res.status(401).send('This method requires authentication');
+};
+
+export const isItem = (item: unknown): item is Item => {
 	const keys = ['id', 'img', 'desc'];
 	return item ? keys.every(key => Object.prototype.hasOwnProperty.call(item, key)) : false;
 };

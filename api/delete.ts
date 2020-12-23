@@ -1,10 +1,11 @@
 import { NowRequest, NowResponse } from '@vercel/node';
 import { db } from './util/db';
-import { cleanBody, expectMethod } from './util/funcs';
+import { cleanBody, expectAuth, expectMethod, VercelFunc } from './util/funcs';
 
-export default async (req: NowRequest, res: NowResponse) => {
+export default async (req: NowRequest, res: NowResponse): VercelFunc => {
 	if (!db) return;
 	expectMethod(req, res, 'DELETE');
+	expectAuth(req, res);
 
 	const body = cleanBody(req, res);
 

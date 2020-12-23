@@ -1,9 +1,9 @@
 import { NowRequest, NowResponse } from '@vercel/node';
 import { Item } from '../types/item';
 import { db } from './util/db';
-import { cleanBody, expectMethod, incNextId, purge } from './util/funcs';
+import { cleanBody, expectMethod, incNextId, purge, VercelFunc } from './util/funcs';
 
-export default async (req: NowRequest, res: NowResponse) => {
+export default async (req: NowRequest, res: NowResponse): VercelFunc => {
 	if (!db) return;
 	expectMethod(req, res, 'PUT');
 
@@ -12,7 +12,7 @@ export default async (req: NowRequest, res: NowResponse) => {
 	const { items } = cleanBody(req, res);
 	const dateNow = Date.now();
 	const newItems: Item[] = [];
-	let nextId = await incNextId(0);
+	let nextId = (await incNextId(0)) as number;
 
 	items.forEach((itm: Item) => {
 		const obj = {
