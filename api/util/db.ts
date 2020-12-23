@@ -11,7 +11,7 @@ try {
 	db = deta.Base('humans');
 	auth = deta.Base('auth');
 } catch (e) {
-	console.error(`Failed to register Deta instance: ${e}`);
+	console.warn(`Failed to register Deta instance: ${e}`);
 }
 
 export { db, auth };
