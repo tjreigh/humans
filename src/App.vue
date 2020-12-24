@@ -19,11 +19,11 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import Post from './components/Post.vue';
+import PostGrid from './components/PostGrid.vue';
 
 @Component({
 	components: {
-		Post,
+		PostGrid,
 	},
 })
 export default class App extends Vue {

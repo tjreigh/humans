@@ -24,16 +24,21 @@ module.exports = {
 			{
 				test: /\.vue$/,
 				loader: 'vue-loader',
+				include: [path.resolve(__dirname, 'src')],
+				exclude: [/node_modules/, /api/],
 			},
 			{
 				test: /\.(js|ts)$/,
-				exclude: /node_modules/,
 				loader: 'ts-loader',
 				options: { appendTsSuffixTo: [/\.vue$/] },
+				include: [path.resolve(__dirname, 'src')],
+				exclude: [/node_modules/, /api/],
 			},
 			{
 				test: /\.scss$/,
 				use: ['vue-style-loader', 'css-loader', 'sass-loader'],
+				include: [path.resolve(__dirname, 'src')],
+				exclude: [/node_modules/, /api/],
 			},
 		],
 	},

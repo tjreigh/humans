@@ -1,24 +1,25 @@
 <template>
 	<div>
 		<div class="exit" @click="exit()">&#10006;</div>
-		<div class="post" :title="title">
-			<img class="img" :src="img" />
-			<p class="desc">{{ desc }}</p>
-		</div>
+		<Post :id="getSafe(() => id)" :desc="getSafe(() => desc)" :img="getSafe(() => img)" />
 		<router-view />
 	</div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import 'reflect-metadata';
-import { Component, Prop, Watch } from 'vue-property-decorator';
+import Post from './Post.vue';
+import { Component, Prop } from 'vue-property-decorator';
 import { Item } from '../../types/item';
 
-@Component
+@Component({
+	components: {
+		Post,
+	},
+})
 export default class PostModal extends Vue {
-	@Prop({ type: String, required: true }) id: string = this.$route.params.id;
-	private item: Item = this.$store.state.single;
+	@Prop({ type: String, required: true }) id: number = parseInt(this.$route.params.id);
+	private item: Item = this.$store.getters.oneItem(this.id);
 	private title = this.item?.id ?? '';
 	private img = this.item?.img ?? '';
 	private desc = this.item?.desc ?? '';
@@ -29,22 +30,6 @@ export default class PostModal extends Vue {
 
 	mounted() {
 		this.$emit('toggle-header', false);
-	}
-
-	@Watch('item', { immediate: true })
-	itemChange() {
-		console.log('itemChange');
-		console.log(this.$store);
-		const item: Item = this.$store.getters.oneItem(parseInt(`${this.id}`));
-		console.log(item);
-		this.setProps(item);
-		return item;
-	}
-
-	setProps(item: Item) {
-		this.title = item.id;
-		this.img = item.img;
-		this.desc = item.desc;
 	}
 
 	exit() {

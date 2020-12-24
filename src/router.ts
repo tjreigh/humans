@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Post from './components/Post.vue';
+import PostGrid from './components/PostGrid.vue';
 import PostModal from './components/PostModal.vue';
 
 Vue.use(VueRouter);
@@ -16,7 +16,7 @@ export default new VueRouter({
 		{
 			path: '/',
 			name: 'Home',
-			component: Post,
+			component: PostGrid,
 		},
 	],
 });
