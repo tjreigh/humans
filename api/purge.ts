@@ -1,9 +1,12 @@
 import { NowRequest, NowResponse } from '@vercel/node';
-import { expectMethod, purge, VercelFunc } from './util/funcs';
+import { expectMethod, purge, AsyncVercelReturn, tryHandleFunc } from './util/funcs';
 
-export default async (req: NowRequest, res: NowResponse): VercelFunc => {
+const handle = async (req: NowRequest, res: NowResponse): AsyncVercelReturn => {
 	expectMethod(req, res, 'PURGE');
 
 	await purge();
-	return res.status(204);
+	console.log('purged');
+	return res.status(204).send('Purged');
 };
+
+export default (req: NowRequest, res: NowResponse) => tryHandleFunc(req, res, handle);

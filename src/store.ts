@@ -1,10 +1,13 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import createPersistedState from 'vuex-persistedstate';
+import { hash } from 'bcryptjs';
 import { Item } from '../types/item';
 import { isItem } from '../api/util/funcs';
 
 Vue.use(Vuex);
+
+type UserData = [string, string];
 
 const prepareItem = (item: Item): Item | undefined => {
 	if (!isItem(item)) return;
@@ -22,25 +25,45 @@ const getItems = async (): Promise<(Item | undefined)[]> => {
 	});
 };
 
+const getUser = async (username: string, pass: string): Promise<void> => {
+	const hashed = hash(pass, 10);
+
+	const req = await fetch('/api/auth/login', {
+		method: 'POST',
+		mode: 'same-origin',
+		body: JSON.stringify({ username, hashed }),
+	});
+};
+
 export default new Vuex.Store({
 	state: {
 		items: [] as Item[],
-		single: {} as Item | undefined,
+		user: '',
 	},
 	getters: {
 		oneItem: state => (id: number): Item | undefined => {
-			state.single = state.items.find(itm => itm.id === id);
-			return state.single;
+			return state.items.find(itm => itm.id === id);
 		},
+		isAuthenticated: state => !!state.user,
+		user: state => state.user,
 	},
 	mutations: {
 		setItems(state, items) {
 			state.items = items;
 		},
+		setUser(state, username) {
+			state.user = username;
+		},
+		logoutUser(state) {
+			state.user = '';
+		},
 	},
 	actions: {
 		async fetchItems({ commit }) {
 			commit('setItems', await getItems());
+		},
+		async trySetUser({ commit }, [username, pass]: UserData) {
+			commit('setUser', await getUser(username, pass));
 		},
 	},
 	plugins: [createPersistedState()],

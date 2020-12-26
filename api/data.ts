@@ -1,9 +1,9 @@
 import { NowRequest, NowResponse } from '@vercel/node';
 import { db } from './util/db';
 import { Item } from '../types/item';
-import { expectMethod, VercelFunc } from './util/funcs';
+import { expectMethod, AsyncVercelReturn, tryHandleFunc } from './util/funcs';
 
-export default async (req: NowRequest, res: NowResponse): VercelFunc => {
+const handle = async (req: NowRequest, res: NowResponse): AsyncVercelReturn => {
 	if (!db) return;
 	expectMethod(req, res, 'GET');
 
@@ -16,3 +16,5 @@ export default async (req: NowRequest, res: NowResponse): VercelFunc => {
 
 	return res.json(data.flat());
 };
+
+export default (req: NowRequest, res: NowResponse) => tryHandleFunc(req, res, handle);

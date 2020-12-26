@@ -1,41 +1,51 @@
 import { NowRequest, NowResponse } from '@vercel/node';
 import { Item } from '../types/item';
 import { db } from './util/db';
-import { cleanBody, expectMethod, incNextId, purge, VercelFunc } from './util/funcs';
+import {
+	cleanBody,
+	expectMethod,
+	incNextId,
+	purge,
+	AsyncVercelReturn,
+	tryHandleFunc,
+} from './util/funcs';
 
-export default async (req: NowRequest, res: NowResponse): VercelFunc => {
+const handle = async (req: NowRequest, res: NowResponse): AsyncVercelReturn => {
 	if (!db) return;
 	expectMethod(req, res, 'PUT');
 
 	await purge();
 
-	const { items } = cleanBody(req, res);
+	const { items } = cleanBody<{ items: Item[] }>(req);
 	const dateNow = Date.now();
 	const newItems: Item[] = [];
-	let nextId = (await incNextId(0)) as number;
+	let nextId = await incNextId(0);
 
-	items.forEach((itm: Item) => {
-		const obj = {
+	for (const itm of items) {
+		const obj: Item = {
 			id: nextId,
 			img: itm.img,
 			desc: itm.desc,
-			date: dateNow,
+			date: itm.date ?? dateNow,
 		};
 
-		if (nextId) nextId++;
+		nextId++;
 
 		// Check obj for any undefined values and return property name of any
-		Object.values(obj).every((x, idx) => {
-			if (x == null) {
-				res.status(422).send(`Request body is missing property "${Object.keys(obj)[idx]}"`);
-				return false;
+		for (const [key, value] of Object.entries(obj)) {
+			if (value == null) {
+				return res.status(422).send(`Request body is missing property "${key}"`);
 			}
-			return true;
-		});
+		}
 
-		newItems.push(obj as Item);
-	});
+		newItems.push(obj);
+	}
 
-	newItems.map(async itm => await db?.put(itm, itm.id.toString()));
-	return res.status(204);
+	console.log(newItems);
+	await incNextId(nextId);
+	await Promise.all(newItems.map(itm => db?.put(itm, itm.id.toString())));
+	console.log('done');
+	return res.status(201).json(newItems);
 };
+
+export default (req: NowRequest, res: NowResponse) => tryHandleFunc(req, res, handle);

@@ -1,4 +1,4 @@
-import { NowRequest, NowRequestBody, NowResponse } from '@vercel/node';
+import { NowRequest, NowResponse } from '@vercel/node';
 import { Item } from '../../types/item';
 import { db } from './db';
 
@@ -6,16 +6,41 @@ interface _IDObj {
 	id: number;
 }
 
-export type VercelFunc = Promise<NowResponse | undefined>;
+class InvalidJSONError extends Error {
+	constructor(args?: string) {
+		super(args);
+	}
+}
+
+export type AsyncVercelReturn = Promise<NowResponse | undefined>;
+export type AsyncVercelFunc = (req: NowRequest, res: NowResponse) => AsyncVercelReturn;
+
+export type LoginBody = {
+	user: string;
+	pass: string;
+};
+
+export const tryHandleFunc = async (
+	req: NowRequest,
+	res: NowResponse,
+	handle: AsyncVercelFunc
+): AsyncVercelReturn => {
+	try {
+		await handle(req, res);
+	} catch (err) {
+		if (err instanceof InvalidJSONError) return res.status(422).send('Malformed JSON');
+		return res.status(500).send(`Uncaught internal server error: \n${err}`);
+	}
+};
 
 /**
  * Fetches the nextId value from the database
  * @returns The nextId value from the database
  */
-export const getNextId = async (): Promise<number | void> => {
-	if (!db) return;
+export const getNextId = async (): Promise<number> => {
+	if (!db) throw Error('Database instantiation failed');
 	const idObj = (await db.get('nextId')) as _IDObj;
-	return idObj?.id ?? 0;
+	return idObj?.id ?? null;
 };
 
 /**
@@ -24,12 +49,12 @@ export const getNextId = async (): Promise<number | void> => {
  * if not provided, existing value will be incremented
  * @returns The value nextId is set to
  */
-export const incNextId = async (base?: number): Promise<number | void> => {
-	if (!db) return;
+export const incNextId = async (base?: number): Promise<number> => {
+	if (!db) throw Error('Database instantiation failed');
 	// Add nextId to db if doesn't already exist
-	if ((await getNextId()) === 0) {
+	if (!(await getNextId())) {
 		await db.put({ id: 1 }, 'nextId');
-		return 0;
+		return 1;
 	}
 
 	const updates = {
@@ -37,36 +62,33 @@ export const incNextId = async (base?: number): Promise<number | void> => {
 	};
 
 	await db.update(updates, 'nextId');
-	return parseInt(JSON.stringify(updates.id));
+	const id = await getNextId();
+	return id;
 };
 
 /**
  * Attempt to parse the request body of a Vercel serverless function
  * @param req - Vercel serverless function request object
- * @param res - Vercel serverless function response object
- * @returns If parsing succeeds, returns parsed body; otherwise returns HTTP 400 response
+ * @returns Attempted parsed body (possibly an error)
  */
-export const cleanBody = (req: NowRequest, res: NowResponse): NowRequestBody | NowResponse => {
+export const cleanBody = <T>(req: NowRequest): T => {
 	try {
-		return JSON.parse(req.body);
-	} catch {
-		return res.status(400).send('Malformed JSON');
+		return JSON.parse(req.body) as T;
+	} catch (err) {
+		throw new InvalidJSONError('Malformed JSON');
 	}
 };
 
 export const purge = async (): Promise<void> => {
-	if (!db) return;
+	if (!db) throw Error('Database instantiation failed');
 	const results = await db.fetch();
-	const data: Array<Item[]> = [];
+	const data: Item[] = [];
 
 	for await (const res of results) {
 		data.push(res as any);
 	}
 
-	for await (const item of data) {
-		item.forEach(async item => await db?.delete(item.id.toString()));
-		//await db.delete(item.id.toString());
-	}
+	await Promise.all(data.flat().map(item => db?.delete(item.id.toString())));
 };
 
 /**
@@ -85,9 +107,14 @@ export const expectMethod = (
 		return res.status(405).send(`Invalid HTTP method (expected ${method})`);
 };
 
-export const expectAuth = (req: NowRequest, res: NowResponse): void | NowResponse => {
-	if (!req.headers?.authorization?.startsWith('Basic'))
+export const expectAuth = (req: NowRequest, res: NowResponse): string | NowResponse => {
+	const authHeader = req.headers?.authorization;
+	if (!authHeader?.startsWith('Basic'))
 		return res.status(401).send('This method requires authentication');
+	return authHeader
+		.split(' ')
+		.slice(1, 2)
+		.toString();
 };
 
 export const isItem = (item: unknown): item is Item => {
