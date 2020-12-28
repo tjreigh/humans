@@ -3,16 +3,15 @@ import { Item } from '../types/item';
 import { db } from './util/db';
 import {
 	cleanBody,
-	expectMethod,
 	incNextId,
 	purge,
 	AsyncVercelReturn,
 	tryHandleFunc,
+	DBInitError,
 } from './util/funcs';
 
 const handle = async (req: NowRequest, res: NowResponse): AsyncVercelReturn => {
-	if (!db) return;
-	expectMethod(req, res, 'PUT');
+	if (!db) throw new DBInitError('Database initialization failed');
 
 	await purge();
 
@@ -48,4 +47,4 @@ const handle = async (req: NowRequest, res: NowResponse): AsyncVercelReturn => {
 	return res.status(201).json(newItems);
 };
 
-export default (req: NowRequest, res: NowResponse) => tryHandleFunc(req, res, handle);
+export default tryHandleFunc(handle, 'PUT');

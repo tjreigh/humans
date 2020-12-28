@@ -12,23 +12,36 @@ class InvalidJSONError extends Error {
 	}
 }
 
-export type AsyncVercelReturn = Promise<NowResponse | undefined>;
+export class DBInitError extends Error {
+	constructor(args?: string) {
+		super(args);
+	}
+}
+
+export type AsyncVercelReturn = Promise<void | NowResponse>;
+export type SyncVercelReturn = void | NowResponse;
 export type AsyncVercelFunc = (req: NowRequest, res: NowResponse) => AsyncVercelReturn;
+export type SyncVercelFunc = (req: NowRequest, res: NowResponse) => SyncVercelReturn;
 
 export type LoginBody = {
 	user: string;
 	pass: string;
 };
 
-export const tryHandleFunc = async (
-	req: NowRequest,
-	res: NowResponse,
-	handle: AsyncVercelFunc
-): AsyncVercelReturn => {
+export const tryHandleFunc = (
+	handle: AsyncVercelFunc | SyncVercelFunc,
+	method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PURGE'
+) => async (req: NowRequest, res: NowResponse): AsyncVercelReturn => {
+	if (req.method?.toUpperCase() !== method) {
+		return res.status(405).send(`Invalid HTTP method (expected ${method})`);
+	}
+
 	try {
 		await handle(req, res);
 	} catch (err) {
 		if (err instanceof InvalidJSONError) return res.status(422).send('Malformed JSON');
+		else if (err instanceof DBInitError)
+			return res.status(503).send('Database initialization failed');
 		return res.status(500).send(`Uncaught internal server error: \n${err}`);
 	}
 };
@@ -38,7 +51,7 @@ export const tryHandleFunc = async (
  * @returns The nextId value from the database
  */
 export const getNextId = async (): Promise<number> => {
-	if (!db) throw Error('Database instantiation failed');
+	if (!db) throw new DBInitError('Database initialization failed');
 	const idObj = (await db.get('nextId')) as _IDObj;
 	return idObj?.id ?? null;
 };
@@ -50,7 +63,7 @@ export const getNextId = async (): Promise<number> => {
  * @returns The value nextId is set to
  */
 export const incNextId = async (base?: number): Promise<number> => {
-	if (!db) throw Error('Database instantiation failed');
+	if (!db) throw new DBInitError('Database initialization failed');
 	// Add nextId to db if doesn't already exist
 	if (!(await getNextId())) {
 		await db.put({ id: 1 }, 'nextId');
@@ -80,7 +93,7 @@ export const cleanBody = <T>(req: NowRequest): T => {
 };
 
 export const purge = async (): Promise<void> => {
-	if (!db) throw Error('Database instantiation failed');
+	if (!db) throw new DBInitError('Database initialization failed');
 	const results = await db.fetch();
 	const data: Item[] = [];
 
@@ -89,22 +102,6 @@ export const purge = async (): Promise<void> => {
 	}
 
 	await Promise.all(data.flat().map(item => db?.delete(item.id.toString())));
-};
-
-/**
- * Checks if a request's HTTP method matches a provided expected method
- * @param req - Vercel serverless function request object
- * @param res - Vercel serverless function response object
- * @param method - Expected HTTP method
- * @returns If method does not match, returns HTTP 405 response with expected method
- */
-export const expectMethod = (
-	req: NowRequest,
-	res: NowResponse,
-	method: string
-): void | NowResponse => {
-	if (req.method?.toUpperCase() !== method)
-		return res.status(405).send(`Invalid HTTP method (expected ${method})`);
 };
 
 export const expectAuth = (req: NowRequest, res: NowResponse): string | NowResponse => {

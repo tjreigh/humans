@@ -1,16 +1,9 @@
 import { NowRequest, NowResponse } from '@vercel/node';
 import { db } from './util/db';
-import {
-	cleanBody,
-	expectAuth,
-	expectMethod,
-	AsyncVercelReturn,
-	tryHandleFunc,
-} from './util/funcs';
+import { cleanBody, expectAuth, AsyncVercelReturn, tryHandleFunc, DBInitError } from './util/funcs';
 
 const handle = async (req: NowRequest, res: NowResponse): AsyncVercelReturn => {
-	if (!db) return;
-	expectMethod(req, res, 'DELETE');
+	if (!db) throw new DBInitError('Database initialization failed');
 	expectAuth(req, res);
 
 	const body = cleanBody<{ id: string }>(req);
@@ -22,4 +15,4 @@ const handle = async (req: NowRequest, res: NowResponse): AsyncVercelReturn => {
 	res.json(item);
 };
 
-export default (req: NowRequest, res: NowResponse) => tryHandleFunc(req, res, handle);
+export default tryHandleFunc(handle, 'DELETE');

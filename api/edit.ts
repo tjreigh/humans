@@ -2,7 +2,7 @@ import { NowRequest, NowResponse } from '@vercel/node';
 import { DetaBaseUpdates } from 'deta';
 import { Item } from '../types/item';
 import { db } from './util/db';
-import { cleanBody, expectMethod, AsyncVercelReturn, tryHandleFunc } from './util/funcs';
+import { cleanBody, AsyncVercelReturn, tryHandleFunc, DBInitError } from './util/funcs';
 
 type EditBody = {
 	id: string;
@@ -12,9 +12,7 @@ type EditBody = {
 
 // TODO: handle updates for nonexistent props
 const handle = async (req: NowRequest, res: NowResponse): AsyncVercelReturn => {
-	if (!db) return;
-	expectMethod(req, res, 'PUT');
-
+	if (!db) throw new DBInitError('Database initialization failed');
 	const { id, img, desc } = cleanBody<EditBody>(req);
 
 	const item = await db.get(id);
@@ -29,4 +27,4 @@ const handle = async (req: NowRequest, res: NowResponse): AsyncVercelReturn => {
 	res.status(204).send('Updated');
 };
 
-export default (req: NowRequest, res: NowResponse) => tryHandleFunc(req, res, handle);
+export default tryHandleFunc(handle, 'PUT');
