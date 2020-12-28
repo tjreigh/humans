@@ -1376,7 +1376,7 @@
     "@typescript-eslint/types" "4.11.0"
     eslint-visitor-keys "^2.0.0"
 
-"@vercel/node@^1.8.5":
+"@vercel/node@1.8.5":
   version "1.8.5"
   resolved "https://registry.yarnpkg.com/@vercel/node/-/node-1.8.5.tgz#2c8b9532f1bb25734a9964c52973386ed78022d4"
   integrity sha512-1iw7FSR8Oau6vZB1MWfBnA5q2a/IqRHiSZSbt8lz0dyTF599q8pc5GcSv/TvmrYaEGzh3+N0S4cbmuMCqVlwJg==
