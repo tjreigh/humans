@@ -8,9 +8,9 @@
 			"automerge": true
 		},
 		{
-      "depTypeList": ["devDependencies"],
-      "automerge": true
-    }
+			"depTypeList": ["devDependencies"],
+			"automerge": true
+		}
 	],
 	"semanticCommits": true
 }
