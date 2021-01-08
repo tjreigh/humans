@@ -56,7 +56,7 @@
 		"vue-router": "3.4.9",
 		"vue-template-compiler": "2.6.12",
 		"vuex": "3.6.0",
-		"webpack": "5.12.0",
+		"webpack": "5.12.1",
 		"webpack-cli": "4.3.1"
 	}
 }
