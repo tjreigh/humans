@@ -4,7 +4,7 @@
 	"labels": ["dependencies"],
 	"packageRules": [
 		{
-			"updateTypes": ["minor"],
+			"updateTypes": ["minor", "patch"],
 			"automerge": true
 		},
 		{
