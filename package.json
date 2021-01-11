@@ -20,7 +20,7 @@
 		"deta": "0.0.8",
 		"vue": "2.6.12",
 		"vue-picture-input": "2.1.6",
-		"vuex-persistedstate": "4.0.0-beta.2"
+		"vuex-persistedstate": "4.0.0-beta.3"
 	},
 	"devDependencies": {
 		"@babel/core": "7.12.10",
