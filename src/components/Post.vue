@@ -1,5 +1,5 @@
 <template>
-	<div id="post" :title="getSafe(() => id)">
+	<div :title="getSafe(() => id)">
 		<img class="postImg" :src="getSafe(() => img)" />
 		<div class="desc">
 			<p>{{ getSafe(() => desc) }}</p>

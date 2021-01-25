@@ -11,6 +11,7 @@ type UserData = [string, string];
 
 const prepareItem = (item: Item): Item | undefined => {
 	if (!isItem(item)) return;
+
 	// Append domain to paths without it, ignore paths that already have domain
 	if (item.img.match(/^\/?media\//)) item.img = `https://legacystudentmedia.com/${item.img}`;
 	return item;
@@ -19,9 +20,18 @@ const prepareItem = (item: Item): Item | undefined => {
 const getItems = async (): Promise<(Item | undefined)[]> => {
 	const req = await fetch('/api/data');
 	const data: Item[] = await req.json();
+
 	console.log(data);
-	return data.map(item => {
+
+	const items = data.map(item => {
 		return prepareItem(item);
+	});
+
+	// Sort items in increasing order by ID
+	return items.sort((a, b) => {
+		if (a && b) {
+			return a.id - b.id;
+		} else return -1;
 	});
 };
 

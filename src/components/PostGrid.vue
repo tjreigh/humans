@@ -4,7 +4,7 @@
 		<div class="loader" :class="{ hidden: !showLoader }"></div>
 		<div class="container">
 			<div
-				class="posts"
+				class="post"
 				v-for="item in items"
 				:key="getSafe(() => item.id)"
 				:title="getSafe(() => item.id)"

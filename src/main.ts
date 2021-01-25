@@ -13,6 +13,7 @@ import store from './store';
 // /*eslint-enable @typescript-eslint/camelcase*/
 
 Vue.config.productionTip = false;
+Vue.config.devtools = true;
 
 // Mixin for optionals
 Vue.mixin({
