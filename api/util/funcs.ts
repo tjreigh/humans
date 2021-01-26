@@ -1,5 +1,5 @@
 import { NowRequest, NowResponse } from '@vercel/node';
-import { Item } from '../../types/item';
+import { Item } from '../../types';
 import { db } from './db';
 
 interface _IDObj {
@@ -8,13 +8,13 @@ interface _IDObj {
 
 class InvalidJSONError extends Error {
 	constructor(args?: string) {
-		super(args);
+		super(args ?? 'Malformed JSON');
 	}
 }
 
 export class DBInitError extends Error {
 	constructor(args?: string) {
-		super(args);
+		super(args ?? 'Database initialization failed');
 	}
 }
 
@@ -22,11 +22,6 @@ export type AsyncVercelReturn = Promise<void | NowResponse>;
 export type SyncVercelReturn = void | NowResponse;
 export type AsyncVercelFunc = (req: NowRequest, res: NowResponse) => AsyncVercelReturn;
 export type SyncVercelFunc = (req: NowRequest, res: NowResponse) => SyncVercelReturn;
-
-export type LoginBody = {
-	user: string;
-	pass: string;
-};
 
 export const tryHandleFunc = (
 	handle: AsyncVercelFunc | SyncVercelFunc,
@@ -39,10 +34,10 @@ export const tryHandleFunc = (
 	try {
 		await handle(req, res);
 	} catch (err) {
-		if (err instanceof InvalidJSONError) return res.status(422).send('Malformed JSON');
-		else if (err instanceof DBInitError)
-			return res.status(503).send('Database initialization failed');
-		return res.status(500).send(`Uncaught internal server error: \n${err}`);
+		const stackOrObj = err.stack ?? err;
+		if (err instanceof InvalidJSONError) return res.status(422).send(stackOrObj);
+		else if (err instanceof DBInitError) return res.status(503).send(stackOrObj);
+		return res.status(500).send(`Uncaught internal server error: \n${stackOrObj}`);
 	}
 };
 
@@ -51,7 +46,7 @@ export const tryHandleFunc = (
  * @returns The nextId value from the database
  */
 export const getNextId = async (): Promise<number> => {
-	if (!db) throw new DBInitError('Database initialization failed');
+	if (!db) throw new DBInitError();
 	const idObj = (await db.get('nextId')) as _IDObj;
 	return idObj?.id ?? null;
 };
@@ -63,7 +58,7 @@ export const getNextId = async (): Promise<number> => {
  * @returns The value nextId is set to
  */
 export const incNextId = async (base?: number): Promise<number> => {
-	if (!db) throw new DBInitError('Database initialization failed');
+	if (!db) throw new DBInitError();
 	// Add nextId to db if doesn't already exist
 	if (!(await getNextId())) {
 		await db.put({ id: 1 }, 'nextId');
@@ -93,7 +88,7 @@ export const cleanBody = <T>(req: NowRequest): T => {
 };
 
 export const purge = async (): Promise<void> => {
-	if (!db) throw new DBInitError('Database initialization failed');
+	if (!db) throw new DBInitError();
 	const results = await db.fetch();
 	const data: Item[] = [];
 

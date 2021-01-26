@@ -3,7 +3,7 @@ import { db } from './util/db';
 import { cleanBody, expectAuth, AsyncVercelReturn, tryHandleFunc, DBInitError } from './util/funcs';
 
 const handle = async (req: NowRequest, res: NowResponse): AsyncVercelReturn => {
-	if (!db) throw new DBInitError('Database initialization failed');
+	if (!db) throw new DBInitError();
 	expectAuth(req, res);
 
 	const body = cleanBody<{ id: string }>(req);

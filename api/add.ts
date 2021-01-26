@@ -1,5 +1,5 @@
 import { NowRequest, NowResponse } from '@vercel/node';
-import { Item } from '../types/item';
+import { Item } from '../types';
 import { db } from './util/db';
 import {
 	cleanBody,
@@ -11,7 +11,7 @@ import {
 } from './util/funcs';
 
 const handle = async (req: NowRequest, res: NowResponse): AsyncVercelReturn => {
-	if (!db) throw new DBInitError('Database initialization failed');
+	if (!db) throw new DBInitError();
 
 	const body = cleanBody<Item>(req);
 	const nextId = (await getNextId()) ?? 0;
