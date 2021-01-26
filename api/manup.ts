@@ -22,7 +22,7 @@ const handle = async (req: NowRequest, res: NowResponse): AsyncVercelReturn => {
 
 	for (const itm of items) {
 		const obj: Item = {
-			id: nextId,
+			id: itm.id ?? nextId,
 			img: itm.img,
 			desc: itm.desc,
 			date: itm.date ?? dateNow,
