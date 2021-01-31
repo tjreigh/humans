@@ -4,7 +4,7 @@ import createPersistedState from 'vuex-persistedstate';
 import { State, Getters, MutationNames, ActionNames, Actions, Mutations } from './types';
 import { getItems } from './items';
 import { tryLogin } from './users';
-import { Item, User } from '@api/node_modules/@app/web/types';
+import { Item, User } from '@typings';
 
 // New store object with awareness of types
 const typedStore: PluginObject<void> = {

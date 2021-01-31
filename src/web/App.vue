@@ -23,7 +23,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import LoginProvider from '@app/components/LoginProvider.vue';
+import LoginProvider from '@web/components/LoginProvider.vue';
 
 @Component({
 	components: {

@@ -1,4 +1,4 @@
-import { RawCreds } from '@api/node_modules/@app/web/types';
+import { RawCreds } from './types';
 
 export const tryLogin = async ([username, password]: RawCreds): Promise<boolean> => {
 	const encodedCreds = btoa(`${username}:${password}`);

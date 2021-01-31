@@ -1,6 +1,6 @@
 import { NowRequest, NowResponse } from '@vercel/node';
 import { db } from '@api/util/db';
-import { Item } from '@app/web/types';
+import { Item } from '@typings';
 import { NowReturn, tryHandleFunc, DBInitError } from '@api/util/funcs';
 
 const handle = async (req: NowRequest, res: NowResponse): NowReturn => {

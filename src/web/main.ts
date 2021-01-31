@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
-import store from './stores';
+import store from '@store';
 // import { v2 as cloudinary } from 'cloudinary';
 
 // /*eslint-disable @typescript-eslint/camelcase*/

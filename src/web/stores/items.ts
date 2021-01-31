@@ -1,5 +1,5 @@
 import { isItem } from 'api/util/funcs';
-import { Item } from '@api/node_modules/@app/web/types';
+import { Item } from '@typings';
 
 function prepareItem(item: Item): Item | undefined {
 	if (!isItem(item)) return;

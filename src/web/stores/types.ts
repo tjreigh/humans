@@ -1,5 +1,5 @@
 import { ActionContext } from 'vuex';
-import { Item, User } from '@api/node_modules/@app/web/types';
+import { Item, User } from '@typings';
 
 export type RawCreds = [string, string];
 
