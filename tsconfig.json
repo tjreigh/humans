@@ -12,20 +12,16 @@
 		"esModuleInterop": true,
 		"allowSyntheticDefaultImports": true,
 		"sourceMap": true,
-		"baseUrl": ".",
+		"baseUrl": "./src",
 		"types": ["webpack-env", "node"],
 		"paths": {
-			"@/*": ["src/*"]
+			"@web/*": ["web/*"],
+			"@api/*": ["api/*"],
+			"@store": ["web/stores/index.ts"],
+			"@typings": ["types/index.ts"]
 		},
 		"lib": ["esnext", "dom", "dom.iterable", "scripthost"]
 	},
-	"include": [
-		"src/**/*.ts",
-		"src/**/*.tsx",
-		"src/**/*.vue",
-		"tests/**/*.ts",
-		"tests/**/*.tsx",
-		"api/**/*.ts"
-	],
+	"include": ["src/**/*.ts", "src/**/*.vue"],
 	"exclude": ["node_modules"]
 }

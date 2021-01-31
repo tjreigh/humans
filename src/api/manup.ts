@@ -1,16 +1,16 @@
 import { NowRequest, NowResponse } from '@vercel/node';
-import { Item } from '../types';
-import { db } from './util/db';
+import { Item } from '@typings';
+import { db } from '@api/util/db';
 import {
 	cleanBody,
 	incNextId,
 	purge,
-	AsyncVercelReturn,
+	NowReturn,
 	tryHandleFunc,
 	DBInitError,
-} from './util/funcs';
+} from '@api/util/funcs';
 
-const handle = async (req: NowRequest, res: NowResponse): AsyncVercelReturn => {
+const handle = async (req: NowRequest, res: NowResponse): NowReturn => {
 	if (!db) throw new DBInitError();
 
 	await purge();

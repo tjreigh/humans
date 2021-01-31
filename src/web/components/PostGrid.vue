@@ -24,10 +24,11 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import Post from './Post.vue';
+import Post from '@app/components/Post.vue';
 import 'reflect-metadata';
 import { Component, Watch } from 'vue-property-decorator';
-import { Item } from '../../types/item';
+import { Item } from '@typings';
+import { ActionNames } from '@store';
 
 @Component({
 	components: {
@@ -39,11 +40,11 @@ export default class PostGrid extends Vue {
 	private showPosts = false;
 
 	get items(): Item[] {
-		return this.$store.state.items;
+		return this.$tStore.state.items;
 	}
 
 	beforeCreate() {
-		this.$store.dispatch('fetchItems');
+		this.$tStore.dispatch(ActionNames.FetchItems);
 	}
 
 	mounted() {

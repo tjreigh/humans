@@ -2,7 +2,7 @@
 node_modules
 /dist
 /media
-api/items.json
+src/api/*.json
 
 # env files
 .env

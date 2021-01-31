@@ -6,12 +6,12 @@ Some PHP for serverless interfacing with web server (file uploads, etc)
 
 ## Directory structure
 
-- `api/`: Vercel serverless functions to manipulate post data
+- `src/api/`: Vercel serverless functions to manipulate post data
+- `src/web`: Vue frontend app (components, main)
+- `src/types/`: Global typings (used by server, components)
 - `private/`: Private control panels to manipulate content store
 - `public/`: HTML template / Vue entry point
-- `src/`: Vue frontend app (components, main)
 - `styles/`: External styles (not component-scoped)
-- `types/`: Global typings (used by server, components)
 
 ## Project setup
 

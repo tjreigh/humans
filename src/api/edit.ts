@@ -1,8 +1,8 @@
 import { NowRequest, NowResponse } from '@vercel/node';
 import { DetaBaseUpdates } from 'deta';
-import { Item } from '../types';
-import { db } from './util/db';
-import { cleanBody, AsyncVercelReturn, tryHandleFunc, DBInitError } from './util/funcs';
+import { Item } from '@typings';
+import { db } from '@api/util/db';
+import { cleanBody, NowReturn, tryHandleFunc, DBInitError, expectAuth } from '@api/util/funcs';
 
 type EditBody = {
 	id: string;
@@ -11,8 +11,9 @@ type EditBody = {
 };
 
 // TODO: handle updates for nonexistent props
-const handle = async (req: NowRequest, res: NowResponse): AsyncVercelReturn => {
+const handle = async (req: NowRequest, res: NowResponse): NowReturn => {
 	if (!db) throw new DBInitError();
+
 	const { id, img, desc } = cleanBody<EditBody>(req);
 
 	const item = await db.get(id);
@@ -27,4 +28,4 @@ const handle = async (req: NowRequest, res: NowResponse): AsyncVercelReturn => {
 	res.status(204).send('Updated');
 };
 
-export default tryHandleFunc(handle, 'PUT');
+export default tryHandleFunc(expectAuth(handle), 'PUT');

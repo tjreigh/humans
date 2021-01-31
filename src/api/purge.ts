@@ -1,7 +1,7 @@
 import { NowRequest, NowResponse } from '@vercel/node';
-import { purge, AsyncVercelReturn, tryHandleFunc } from './util/funcs';
+import { purge, NowReturn, tryHandleFunc } from '@api/util/funcs';
 
-const handle = async (req: NowRequest, res: NowResponse): AsyncVercelReturn => {
+const handle = async (req: NowRequest, res: NowResponse): NowReturn => {
 	await purge();
 	console.log('purged');
 	return res.status(204).send('Purged');

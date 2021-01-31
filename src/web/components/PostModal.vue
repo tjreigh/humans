@@ -8,9 +8,8 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import Post from './Post.vue';
+import Post from '@web/components/Post.vue';
 import { Component, Prop } from 'vue-property-decorator';
-import { Item } from '../../types/item';
 
 @Component({
 	components: {
@@ -19,7 +18,8 @@ import { Item } from '../../types/item';
 })
 export default class PostModal extends Vue {
 	@Prop({ type: String, required: true }) id: number = parseInt(this.$route.params.id);
-	private item: Item = this.$store.getters.oneItem(this.id);
+	private itemGetter = this.$tStore.getters.oneItem(this.$tStore.state);
+	private item = this.itemGetter(this.id);
 	private title = this.item?.id ?? '';
 	private img = this.item?.img ?? '';
 	private desc = this.item?.desc ?? '';

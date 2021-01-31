@@ -1,5 +1,6 @@
 <template>
 	<div id="app">
+		<LoginProvider />
 		<div class="header" :class="{ hidden: !showHeader }">
 			<div class="exit">
 				<button class="exitBtn" onclick="window.location.href = 'https://therideronline.com';">
@@ -13,17 +14,20 @@
 				/>
 			</div>
 		</div>
+		<router-link to="/login">
+			<p>Login</p>
+		</router-link>
 		<router-view @toggle-header="toggleHeader" />
 	</div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import PostGrid from './components/PostGrid.vue';
+import LoginProvider from '@app/components/LoginProvider.vue';
 
 @Component({
 	components: {
-		PostGrid,
+		LoginProvider,
 	},
 })
 export default class App extends Vue {

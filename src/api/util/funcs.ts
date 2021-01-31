@@ -1,6 +1,7 @@
 import { NowRequest, NowResponse } from '@vercel/node';
-import { Item } from '../../types';
-import { db } from './db';
+import { parse } from 'cookie';
+import { Item } from '@app/web/types';
+import { db, sessions } from './db';
 
 interface _IDObj {
 	id: number;
@@ -18,20 +19,19 @@ export class DBInitError extends Error {
 	}
 }
 
-export type AsyncVercelReturn = Promise<void | NowResponse>;
-export type SyncVercelReturn = void | NowResponse;
-export type AsyncVercelFunc = (req: NowRequest, res: NowResponse) => AsyncVercelReturn;
-export type SyncVercelFunc = (req: NowRequest, res: NowResponse) => SyncVercelReturn;
+export type NowReturn = Promise<void | NowResponse>;
+export type NowFunc = (req: NowRequest, res: NowResponse) => NowReturn;
 
 export const tryHandleFunc = (
-	handle: AsyncVercelFunc | SyncVercelFunc,
+	handle: NowFunc,
 	method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PURGE'
-) => async (req: NowRequest, res: NowResponse): AsyncVercelReturn => {
+) => async (req: NowRequest, res: NowResponse): NowReturn => {
 	if (req.method?.toUpperCase() !== method) {
 		return res.status(405).send(`Invalid HTTP method (expected ${method})`);
 	}
 
 	try {
+		if (!process.env.NODE_ENV) return;
 		await handle(req, res);
 	} catch (err) {
 		const stackOrObj = err.stack ?? err;
@@ -39,6 +39,26 @@ export const tryHandleFunc = (
 		else if (err instanceof DBInitError) return res.status(503).send(stackOrObj);
 		return res.status(500).send(`Uncaught internal server error: \n${stackOrObj}`);
 	}
+};
+
+export const expectAuth = (handle: NowFunc) => async (
+	req: NowRequest,
+	res: NowResponse
+): NowReturn => {
+	const rawCookies = req.headers.cookie!.split('; ');
+	const session = rawCookies.find(c => {
+		const split = c.split('=');
+		if (split[0] === 'session') return split[1];
+		return undefined;
+	});
+
+	if (!session) return res.status(401).send('Expected authorization');
+
+	const dbSession = await sessions?.get(session);
+
+	if (!(dbSession === session)) return res.status(403).send('Session not authenticated');
+
+	return handle(req, res);
 };
 
 /**
@@ -97,16 +117,6 @@ export const purge = async (): Promise<void> => {
 	}
 
 	await Promise.all(data.flat().map(item => db?.delete(item.id.toString())));
-};
-
-export const expectAuth = (req: NowRequest, res: NowResponse): string | NowResponse => {
-	const authHeader = req.headers?.authorization;
-	if (!authHeader?.startsWith('Basic'))
-		return res.status(401).send('This method requires authentication');
-	return authHeader
-		.split(' ')
-		.slice(1, 2)
-		.toString();
 };
 
 export const isItem = (item: unknown): item is Item => {

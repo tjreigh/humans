@@ -1,9 +1,9 @@
 import { NowRequest, NowResponse } from '@vercel/node';
-import { db } from './util/db';
-import { Item } from '../types';
-import { AsyncVercelReturn, tryHandleFunc, DBInitError } from './util/funcs';
+import { db } from '@api/util/db';
+import { Item } from '@app/web/types';
+import { NowReturn, tryHandleFunc, DBInitError } from '@api/util/funcs';
 
-const handle = async (req: NowRequest, res: NowResponse): AsyncVercelReturn => {
+const handle = async (req: NowRequest, res: NowResponse): NowReturn => {
 	if (!db) throw new DBInitError();
 
 	const results = await db.fetch();

@@ -1,10 +1,9 @@
 import { NowRequest, NowResponse } from '@vercel/node';
-import { db } from './util/db';
-import { cleanBody, expectAuth, AsyncVercelReturn, tryHandleFunc, DBInitError } from './util/funcs';
+import { db } from '@api/util/db';
+import { cleanBody, expectAuth, NowReturn, tryHandleFunc, DBInitError } from '@api/util/funcs';
 
-const handle = async (req: NowRequest, res: NowResponse): AsyncVercelReturn => {
+const handle = async (req: NowRequest, res: NowResponse): NowReturn => {
 	if (!db) throw new DBInitError();
-	expectAuth(req, res);
 
 	const body = cleanBody<{ id: string }>(req);
 
