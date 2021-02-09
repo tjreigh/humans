@@ -2807,7 +2807,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"autoprefixer@npm:^9.0.0, autoprefixer@npm:^9.8.6":
+"autoprefixer@npm:^10.0.0":
+  version: 10.2.4
+  resolution: "autoprefixer@npm:10.2.4"
+  dependencies:
+    browserslist: ^4.16.1
+    caniuse-lite: ^1.0.30001181
+    colorette: ^1.2.1
+    fraction.js: ^4.0.13
+    normalize-range: ^0.1.2
+    postcss-value-parser: ^4.1.0
+  peerDependencies:
+    postcss: ^8.1.0
+  bin:
+    autoprefixer: bin/autoprefixer
+  checksum: c07fb325ee63e535a2246be4ac0d6afc9e9e43e66386e39c495015bdc8d83547ffdc0797be22d88781d044d3eecbbcb13d8a550ef94eb684091b24a05eb0c83e
+  languageName: node
+  linkType: hard
+
+"autoprefixer@npm:^9.8.6":
   version: 9.8.6
   resolution: "autoprefixer@npm:9.8.6"
   dependencies:
@@ -5909,6 +5927,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"fraction.js@npm:^4.0.13":
+  version: 4.0.13
+  resolution: "fraction.js@npm:4.0.13"
+  checksum: 1e9ec132b09f17f3e41aa53508197901277f11896f6adc0b51a4b38511e6236813a471488c319221f4fadf7c854be9566a4924215623b460364591d80e1791c3
+  languageName: node
+  linkType: hard
+
 "fragment-cache@npm:^0.2.1":
   version: 0.2.1
   resolution: "fragment-cache@npm:0.2.1"
@@ -6679,7 +6704,7 @@ fsevents@~2.3.1:
     "@vue/cli-service": 4.5.11
     "@vue/eslint-config-prettier": 6.0.0
     "@vue/eslint-config-typescript": 7.0.0
-    autoprefixer: ^9.0.0
+    autoprefixer: ^10.0.0
     babel-loader: ^8.2.2
     babel-plugin-module-resolver: ^4.1.0
     bcryptjs: 2.4.3
