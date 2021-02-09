@@ -1,21 +1,19 @@
 <template>
 	<!-- all your div are belong to us -->
 	<div id="posts">
-		<div class="loader" :class="{ hidden: !showLoader }"></div>
-		<div class="container">
+		<Spinner v-if="showLoader" />
+		<div id="error" v-if="items == null">
+			<p>Error loading posts</p>
+		</div>
+		<div v-if="!didError" class="container">
 			<div
 				class="post"
 				v-for="item in items"
-				:key="getSafe(() => item.id)"
-				:title="getSafe(() => item.id)"
-				@click="openModal(getSafe(() => item.id))"
+				:key="item.id"
+				:title="item.id"
+				@click="openModal(item.id)"
 			>
-				<Post
-					:id="getSafe(() => item.id)"
-					:desc="getSafe(() => item.desc)"
-					:img="getSafe(() => item.img)"
-					:class="{ hidden: !showPosts }"
-				/>
+				<Post v-if="item != null" v-show="showPosts" :item="item" />
 			</div>
 		</div>
 		<router-view />
@@ -23,24 +21,29 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import Post from '@app/components/Post.vue';
-import 'reflect-metadata';
-import { Component, Watch } from 'vue-property-decorator';
+import { Vue, Component, Watch } from 'vue-property-decorator';
 import { Item } from '@typings';
 import { ActionNames } from '@store';
 
 @Component({
 	components: {
-		Post,
+		Post: () => import('@web/components/Post.vue'),
+		Spinner: () => import('@web/components/Spinner.vue'),
 	},
 })
 export default class PostGrid extends Vue {
 	private showLoader = true;
 	private showPosts = false;
 
-	get items(): Item[] {
-		return this.$tStore.state.items;
+	get items(): Item[] | null {
+		const maybeItems = this.$tStore.state.items;
+
+		if (!maybeItems) {
+			this.showLoader = false;
+			return null;
+		}
+
+		return maybeItems;
 	}
 
 	beforeCreate() {
@@ -60,11 +63,10 @@ export default class PostGrid extends Vue {
 
 	// Hide loader once items load
 	@Watch('items')
-	dataLoaded(newItems: Item[]) {
+	onRecieveItems(newItems: Item[]) {
 		if (newItems.length < 0) return;
 
 		this.showLoader = false;
-		this.showPosts = true;
 
 		setTimeout(this.resizeAllGridItems, 350);
 	}
@@ -74,7 +76,7 @@ export default class PostGrid extends Vue {
 		 Make many small grid rows, calculate how many rows each element should span
 		 TODO: rewrite in SAAS/scss? */
 	resizeGridItem(item: HTMLElement) {
-		const postContainer = document.querySelector('div.container') as Element;
+		const postContainer = document.querySelector('div.container') as HTMLElement;
 		const rowHeight = parseInt(
 			window.getComputedStyle(postContainer)?.getPropertyValue('grid-auto-rows')
 		);
@@ -107,23 +109,6 @@ export default class PostGrid extends Vue {
 	margin: 15px;
 }
 
-.loader {
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	z-index: 1;
-	width: 150px;
-	height: 150px;
-	margin: -75px 0 0 -75px;
-	border: 16px solid #f3f3f3;
-	border-radius: 50%;
-	border-top: 16px solid #3498db;
-	width: 120px;
-	height: 120px;
-	animation: spin 2s linear infinite;
-	-webkit-animation: spin 2s linear infinite;
-}
-
 .container {
 	position: relative;
 	z-index: 0;
@@ -140,21 +125,15 @@ export default class PostGrid extends Vue {
 	cursor: pointer;
 }
 
-@-webkit-keyframes spin {
-	0% {
-		-webkit-transform: rotate(0deg);
-	}
-	100% {
-		-webkit-transform: rotate(360deg);
-	}
+#error {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
-@keyframes spin {
-	0% {
-		transform: rotate(0deg);
-	}
-	100% {
-		transform: rotate(360deg);
-	}
+#error > p {
+	padding: 5px;
+	text-align: center;
+	font-size: 32pt;
 }
 </style>

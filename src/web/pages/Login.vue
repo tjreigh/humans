@@ -10,8 +10,7 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import Component from 'vue-class-component';
+import { Vue, Component } from 'vue-property-decorator';
 import { ActionNames } from '@store';
 
 @Component({
@@ -21,13 +20,14 @@ export default class Login extends Vue {
 	private username!: string;
 	private password!: string;
 
-	handleLogin(e: Event) {
+	async handleLogin(e: Event) {
 		e.preventDefault();
 
-		const didLogin = this.$tStore.dispatch(ActionNames.TryLoginUser, [
+		const didLogin = await this.$tStore.dispatch(ActionNames.TryLoginUser, [
 			this.username,
 			this.password,
 		]);
+
 		if (didLogin) alert(`Welcome, ${this.$tStore.getters.user}`);
 	}
 }

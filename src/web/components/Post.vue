@@ -1,21 +1,25 @@
 <template>
-	<div :title="getSafe(() => id)">
-		<img class="postImg" :src="getSafe(() => img)" />
+	<div :title="item.id">
+		<img class="postImg" :src="item.img" />
 		<div class="desc">
-			<p>{{ getSafe(() => desc) }}</p>
+			<p>{{ item.desc }}</p>
 		</div>
 	</div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { Component, Prop } from 'vue-property-decorator';
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
+import { Item } from '@typings';
+import { isItem } from '@/util';
 
 @Component
 export default class Post extends Vue {
-	@Prop({ type: Number, required: true }) readonly id!: number;
-	@Prop({ type: String, required: true }) readonly desc!: string;
-	@Prop({ type: String, required: true }) readonly img!: string;
+	@Prop({ type: Object, required: true }) item: Item | null = null;
+
+	@Watch('item')
+	onRecieveItem(newItem: Item) {
+		if (!isItem(newItem)) this.item = null;
+	}
 }
 </script>
 

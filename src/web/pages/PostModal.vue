@@ -7,13 +7,11 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import Post from '@web/components/Post.vue';
-import { Component, Prop } from 'vue-property-decorator';
+import { Vue, Component, Prop } from 'vue-property-decorator';
 
 @Component({
 	components: {
-		Post,
+		Post: () => import('@web/components/Post.vue'),
 	},
 })
 export default class PostModal extends Vue {
