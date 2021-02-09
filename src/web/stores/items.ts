@@ -1,4 +1,4 @@
-import { isItem } from 'api/util/funcs';
+import { isItem } from '@util';
 import { Item } from '@typings';
 
 function prepareItem(item: Item): Item | undefined {
@@ -6,23 +6,25 @@ function prepareItem(item: Item): Item | undefined {
 
 	// Append domain to paths without it, ignore paths that already have domain
 	if (item.img.match(/^\/?media\//)) item.img = `https://legacystudentmedia.com/${item.img}`;
+	if (item.loc.toLowerCase() === 'lhs') `https://legacystudentmedia.com/${item.img}`;
 	return item;
 }
 
-export async function getItems(): Promise<Item[]> {
+export async function getItems(): Promise<Item[] | null> {
+	// TODO: detect if on vercel and modify path
+	// const isDevEnv = process.env.NODE_ENV!.trim().substring(0, 3) === 'dev';
+	// const baseUrl = '/api/data';
+	// const apiUrl = isDevEnv ? `https://humans.tjdoescode.vercel.app${baseUrl}` : baseUrl;
+
 	const req = await fetch('/api/data');
-	const data: Item[] = await req.json();
 
-	console.log(data);
+	if (req.ok) {
+		const rawData: Item[] = await req.json();
 
-	const items = data.map(item => prepareItem(item));
+		const items = rawData.map(item => prepareItem(item));
 
-	// Sort items in descending order by ID
-	const sorted = items.sort((a, b) => {
-		if (a && b) {
-			return b.id - a.id;
-		} else return -1;
-	});
-
-	return sorted.filter(itm => isItem(itm)) as Item[];
+		return items as Item[];
+	} else {
+		return null;
+	}
 }

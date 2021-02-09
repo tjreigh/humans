@@ -4,7 +4,7 @@ import createPersistedState from 'vuex-persistedstate';
 import { State, Getters, MutationNames, ActionNames, Actions, Mutations } from './types';
 import { getItems } from './items';
 import { tryLogin } from './users';
-import { Item, User } from '@typings';
+import { User } from '@typings';
 
 // New store object with awareness of types
 const typedStore: PluginObject<void> = {
@@ -21,7 +21,7 @@ Vue.use(Vuex);
 Vue.use(typedStore);
 
 const getters: GetterTree<State, State> & Getters = {
-	oneItem: state => id => state.items.find(itm => itm.id === id) as Item,
+	oneItem: state => id => state.items?.find(itm => itm.id === id),
 	isAuthenticated: state => !!state.user,
 	user: state => state.user,
 };
@@ -42,7 +42,9 @@ const mutations: MutationTree<State> & Mutations = {
 
 const actions: ActionTree<State, State> & Actions = {
 	[ActionNames.FetchItems]: async ({ commit }) => {
-		commit(MutationNames.SetItems, await getItems());
+		const maybeItems = await getItems();
+		if (maybeItems) commit(MutationNames.SetItems, maybeItems);
+		else commit(MutationNames.SetItems, null);
 	},
 	[ActionNames.TryLoginUser]: async ({ commit }, [username, pass]) => {
 		const didLogin = await tryLogin([username, pass]);
@@ -57,7 +59,7 @@ const actions: ActionTree<State, State> & Actions = {
 	},
 };
 
-export default new Vuex.Store<State>({
+export const store = new Vuex.Store<State>({
 	state: new State(),
 	getters,
 	mutations,
@@ -66,3 +68,4 @@ export default new Vuex.Store<State>({
 });
 
 export { State, MutationNames, ActionNames } from './types';
+export default store;

@@ -5,14 +5,14 @@ interface TypedStore extends Store<State> {
 	getters: Getters;
 	commit: <M extends MutationNames>(
 		mutation: M,
-		payload: Mutations[typeof mutation],
+		payload: Parameters<Actions[typeof mutation]>[1],
 		options?: CommitOptions
-	) => ReturnType<Mutations<M>>;
+	) => ReturnType<Mutations[M]>;
 	dispatch: <A extends ActionNames>(
 		action: A,
 		payload?: Parameters<Actions[typeof action]>[1],
 		options?: DispatchOptions
-	) => ReturnType<Actions<M>>;
+	) => ReturnType<Actions[A]>;
 }
 
 declare module 'vue/types/vue' {
