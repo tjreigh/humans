@@ -1,19 +1,27 @@
 import { NowRequest, NowResponse } from '@vercel/node';
-import { db } from '@api/util/db';
 import { Item } from '@typings';
-import { NowReturn, tryHandleFunc, DBInitError } from '@api/util/funcs';
+import { db, NowReturn, tryHandleFunc, DBInitError, isItem } from '@util';
 
 const handle = async (req: NowRequest, res: NowResponse): NowReturn => {
 	if (!db) throw new DBInitError();
 
 	const results = await db.fetch();
-	const data: Item[] = [];
+	const rawData: Item[] = [];
 
 	for await (const result of results) {
-		data.push(result as any);
+		rawData.push(result as any);
 	}
 
-	return res.json(data.flat());
+	// Sort items in descending order by ID
+	const sorted = rawData.flat().sort((a, b) => {
+		if (a && b) {
+			return b.id - a.id;
+		} else return -1;
+	});
+
+	const items = sorted.filter(itm => isItem(itm));
+
+	return res.json(items);
 };
 
 export default tryHandleFunc(handle, 'GET');

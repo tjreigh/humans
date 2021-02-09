@@ -1,5 +1,5 @@
 import { NowRequest, NowResponse } from '@vercel/node';
-import { purge, NowReturn, tryHandleFunc } from '@api/util/funcs';
+import { purge, NowReturn, tryHandleFunc } from '@util';
 
 const handle = async (req: NowRequest, res: NowResponse): NowReturn => {
 	await purge();

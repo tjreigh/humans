@@ -1,8 +1,7 @@
 import { NowRequest, NowResponse } from '@vercel/node';
 import { compare } from 'bcryptjs';
-import { sessions, users } from '@api/util/db';
-import { cleanBody, NowReturn, tryHandleFunc, DBInitError } from '@api/util/funcs';
-import { User } from '@typings';
+import { sessions, users, cleanBody, NowReturn, tryHandleFunc, DBInitError } from '@util';
+import { User, Session } from '@typings';
 import { v4 as uuidv4 } from 'uuid';
 import { serialize } from 'cookie';
 import { addDays } from 'date-fns';
@@ -19,6 +18,17 @@ const handle = async (req: NowRequest, res: NowResponse): NowReturn => {
 	const match = await compare(password, dbUser.password);
 
 	if (match) {
+		const qTrySession = await sessions?.fetch({ username }, 1, 1);
+		let sess = [];
+
+		for await (const s of qTrySession) {
+			sess.push((s as unknown) as Session);
+		}
+
+		sess = sess.flat();
+
+		if (sess.length > 0) await sessions.delete(sess[0].key);
+
 		const sessionId = uuidv4();
 
 		const expires = addDays(new Date(Date.now()), 7);

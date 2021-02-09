@@ -4,15 +4,19 @@ export enum AuthLevel {
 	Manager,
 }
 
-type PassReset = {
+interface PassReset {
 	resetToken: string;
 	tokenExpires: Date;
-};
+}
 
-export type User = {
+export interface User {
 	username: string;
 	password: string;
-	email?: string;
-	authLevel?: AuthLevel;
+	email: string;
+	authLevel: AuthLevel;
 	resetPayload?: PassReset;
-};
+}
+
+export interface Session extends User {
+	key: string;
+}

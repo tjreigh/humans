@@ -1,8 +1,7 @@
 import { NowRequest, NowResponse } from '@vercel/node';
 import { DetaBaseUpdates } from 'deta';
 import { Item } from '@typings';
-import { db } from '@api/util/db';
-import { cleanBody, NowReturn, tryHandleFunc, DBInitError, expectAuth } from '@api/util/funcs';
+import { db, cleanBody, NowReturn, tryHandleFunc, DBInitError, expectAuth } from '@util';
 
 type EditBody = {
 	id: string;
@@ -28,4 +27,4 @@ const handle = async (req: NowRequest, res: NowResponse): NowReturn => {
 	res.status(204).send('Updated');
 };
 
-export default tryHandleFunc(expectAuth(handle), 'PUT');
+export default tryHandleFunc(expectAuth(handle, 2), 'PUT');

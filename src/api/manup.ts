@@ -1,14 +1,6 @@
 import { NowRequest, NowResponse } from '@vercel/node';
 import { Item } from '@typings';
-import { db } from '@api/util/db';
-import {
-	cleanBody,
-	incNextId,
-	purge,
-	NowReturn,
-	tryHandleFunc,
-	DBInitError,
-} from '@api/util/funcs';
+import { db, cleanBody, incNextId, purge, NowReturn, tryHandleFunc, DBInitError } from '@util';
 
 const handle = async (req: NowRequest, res: NowResponse): NowReturn => {
 	if (!db) throw new DBInitError();
@@ -21,9 +13,17 @@ const handle = async (req: NowRequest, res: NowResponse): NowReturn => {
 	let nextId = await incNextId(0);
 
 	for (const itm of items) {
+		const loc = itm.img
+			.toLowerCase()
+			.trim()
+			.startsWith('http')
+			? 'other'
+			: '';
+
 		const obj: Item = {
 			id: itm.id ?? nextId,
 			img: itm.img,
+			loc: itm.loc ?? loc,
 			desc: itm.desc,
 			date: itm.date ?? dateNow,
 		};

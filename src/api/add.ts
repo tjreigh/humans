@@ -1,14 +1,15 @@
 import { NowRequest, NowResponse } from '@vercel/node';
 import { Item } from '@typings';
-import { db } from '@api/util/db';
 import {
+	db,
 	cleanBody,
 	getNextId,
 	incNextId,
 	NowReturn,
 	tryHandleFunc,
 	DBInitError,
-} from '@api/util/funcs';
+	expectAuth,
+} from '@util';
 
 const handle = async (req: NowRequest, res: NowResponse): NowReturn => {
 	if (!db) throw new DBInitError();
@@ -36,4 +37,4 @@ const handle = async (req: NowRequest, res: NowResponse): NowReturn => {
 	res.status(201).json(obj);
 };
 
-export default tryHandleFunc(handle, 'POST');
+export default tryHandleFunc(expectAuth(handle, 1), 'POST');
