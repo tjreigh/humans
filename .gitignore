@@ -4,6 +4,13 @@ node_modules
 /media
 src/api/*.json
 
+.yarn/*
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
+
 # env files
 .env
 .env.local
@@ -27,4 +34,3 @@ pnpm-debug.log*
 
 .vercel
 .cache
-.yarn
