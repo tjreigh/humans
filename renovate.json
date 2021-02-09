@@ -12,5 +12,6 @@
 			"automerge": true
 		}
 	],
-	"semanticCommits": true
+	"semanticCommits": "enabled",
+	"rangeStrategy": "update-lockfile"
 }
