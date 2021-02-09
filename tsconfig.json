@@ -3,22 +3,28 @@
 		"target": "es2019",
 		"module": "esnext",
 		"strict": true,
-		"jsx": "preserve",
-		"importHelpers": true,
+		"declaration": true,
+
 		"moduleResolution": "node",
+		"isolatedModules": true,
+		"sourceMap": true,
+		"importHelpers": true,
+
 		"experimentalDecorators": true,
 		"emitDecoratorMetadata": true,
+		"preserveConstEnums": true,
 		"skipLibCheck": true,
 		"esModuleInterop": true,
 		"allowSyntheticDefaultImports": true,
-		"sourceMap": true,
+
 		"baseUrl": "./src",
 		"types": ["webpack-env", "node"],
 		"paths": {
+			"@/*": ["./*"],
 			"@web/*": ["web/*"],
-			"@api/*": ["api/*"],
-			"@store": ["web/stores/index.ts"],
-			"@typings": ["types/index.ts"]
+			"@util": ["util"],
+			"@store": ["web/stores"],
+			"@typings": ["types"]
 		},
 		"lib": ["esnext", "dom", "dom.iterable", "scripthost"]
 	},

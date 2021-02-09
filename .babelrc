@@ -3,5 +3,18 @@
 	"plugins": [
 		"@babel/plugin-proposal-optional-chaining",
 		"@babel/plugin-proposal-nullish-coalescing-operator"
+		/*[
+			"module-resolver",
+			{
+				"root": ["./src"],
+				"alias": {
+					"@": "./src",
+					"@web": "./src/web",
+					"@util": "./src/util/index.ts",
+					"@store": "./src/web/stores/index.ts",
+					"@typings": "./src/types/index.ts"
+				}
+			}
+		]*/
 	]
 }
