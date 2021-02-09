@@ -1,6 +1,5 @@
 import { NowRequest, NowResponse } from '@vercel/node';
-import { parse } from 'cookie';
-import { Item } from '@app/web/types';
+import { Item } from '@typings';
 import { db, sessions } from './db';
 
 interface _IDObj {
@@ -41,7 +40,7 @@ export const tryHandleFunc = (
 	}
 };
 
-export const expectAuth = (handle: NowFunc) => async (
+export const expectAuth = (handle: NowFunc, level: number) => async (
 	req: NowRequest,
 	res: NowResponse
 ): NowReturn => {
@@ -65,11 +64,11 @@ export const expectAuth = (handle: NowFunc) => async (
  * Fetches the nextId value from the database
  * @returns The nextId value from the database
  */
-export const getNextId = async (): Promise<number> => {
+export async function getNextId(): Promise<number> {
 	if (!db) throw new DBInitError();
 	const idObj = (await db.get('nextId')) as _IDObj;
 	return idObj?.id ?? null;
-};
+}
 
 /**
  * Increments or resets the nextId value in the database
@@ -77,7 +76,7 @@ export const getNextId = async (): Promise<number> => {
  * if not provided, existing value will be incremented
  * @returns The value nextId is set to
  */
-export const incNextId = async (base?: number): Promise<number> => {
+export async function incNextId(base?: number): Promise<number> {
 	if (!db) throw new DBInitError();
 	// Add nextId to db if doesn't already exist
 	if (!(await getNextId())) {
@@ -92,22 +91,22 @@ export const incNextId = async (base?: number): Promise<number> => {
 	await db.update(updates, 'nextId');
 	const id = await getNextId();
 	return id;
-};
+}
 
 /**
  * Attempt to parse the request body of a Vercel serverless function
  * @param req - Vercel serverless function request object
  * @returns Attempted parsed body (possibly an error)
  */
-export const cleanBody = <T>(req: NowRequest): T => {
+export function cleanBody<T>(req: NowRequest): T {
 	try {
 		return JSON.parse(req.body) as T;
 	} catch (err) {
 		throw new InvalidJSONError('Malformed JSON');
 	}
-};
+}
 
-export const purge = async (): Promise<void> => {
+export async function purge(): Promise<void> {
 	if (!db) throw new DBInitError();
 	const results = await db.fetch();
 	const data: Item[] = [];
@@ -117,9 +116,9 @@ export const purge = async (): Promise<void> => {
 	}
 
 	await Promise.all(data.flat().map(item => db?.delete(item.id.toString())));
-};
+}
 
-export const isItem = (item: unknown): item is Item => {
+export function isItem(item: unknown): item is Item {
 	const keys = ['id', 'img', 'desc'];
 	return item ? keys.every(key => Object.prototype.hasOwnProperty.call(item, key)) : false;
-};
+}
