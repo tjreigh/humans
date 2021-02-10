@@ -1450,7 +1450,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/json-schema@npm:^7.0.3, @types/json-schema@npm:^7.0.4, @types/json-schema@npm:^7.0.5, @types/json-schema@npm:^7.0.6":
+"@types/json-schema@npm:^7.0.3, @types/json-schema@npm:^7.0.4, @types/json-schema@npm:^7.0.5":
   version: 7.0.7
   resolution: "@types/json-schema@npm:7.0.7"
   checksum: b9d2c509fa4e0b82f58e73f5e6ab76c60ff1884ba41bb82f37fb1cece226d4a3e5a62fedf78a43da0005373a6713d9abe61c1e592906402c41c08ad6ab26d52b
@@ -2437,7 +2437,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ajv@npm:^6.1.0, ajv@npm:^6.10.0, ajv@npm:^6.10.2, ajv@npm:^6.12.2, ajv@npm:^6.12.3, ajv@npm:^6.12.4, ajv@npm:^6.12.5":
+"ajv@npm:^6.1.0, ajv@npm:^6.10.0, ajv@npm:^6.10.2, ajv@npm:^6.12.2, ajv@npm:^6.12.3, ajv@npm:^6.12.4":
   version: 6.12.6
   resolution: "ajv@npm:6.12.6"
   dependencies:
@@ -6721,7 +6721,7 @@ fsevents@~2.3.1:
     eslint-plugin-promise: 4.3.1
     eslint-plugin-vue: 7.5.0
     postcss: ^8.0.0
-    postcss-loader: ^4.0.0
+    postcss-loader: ^5.0.0
     reflect-metadata: 0.1.13
     ts-loader: 8.0.17
     typescript: 4.1.5
@@ -9400,19 +9400,17 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"postcss-loader@npm:^4.0.0":
-  version: 4.2.0
-  resolution: "postcss-loader@npm:4.2.0"
+"postcss-loader@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "postcss-loader@npm:5.0.0"
   dependencies:
     cosmiconfig: ^7.0.0
     klona: ^2.0.4
-    loader-utils: ^2.0.0
-    schema-utils: ^3.0.0
     semver: ^7.3.4
   peerDependencies:
     postcss: ^7.0.0 || ^8.0.1
-    webpack: ^4.0.0 || ^5.0.0
-  checksum: 685a54e5768171d27ada47f304b7a375ac5ec768844e70238bb88089636494efa29ec082525efaac889f7dfac0fbea55cf0f4680c12597b7b80cabf442390c46
+    webpack: ^5.0.0
+  checksum: 51cdba32b86ed793812b12905f9944631e5bcfe271b20ca04e7c63babde672f79a25061e57a0b424328be243049958c9396289e62ce39e49f8d4da25825ebdd5
   languageName: node
   linkType: hard
 
@@ -10521,17 +10519,6 @@ fsevents@~2.3.1:
     ajv: ^6.12.4
     ajv-keywords: ^3.5.2
   checksum: 3851bcc7e44a3f35d3ca96e460c598aa24cec9fe395b196395316a043dc111d25735a9a49b1a115e4b52d5ed0d8bbcfb9fe1bfd077610f192b613e020d3f3ef2
-  languageName: node
-  linkType: hard
-
-"schema-utils@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "schema-utils@npm:3.0.0"
-  dependencies:
-    "@types/json-schema": ^7.0.6
-    ajv: ^6.12.5
-    ajv-keywords: ^3.5.2
-  checksum: a084f593f222560c412a4d8f40c92386c01c1c709f27c0672c2f02927a4d4d475f57f8b8e91198d0defb452add160476a03f07a05b26200a64b5124fa874e158
   languageName: node
   linkType: hard
 
