@@ -2807,20 +2807,20 @@ __metadata:
   linkType: hard
 
 "autoprefixer@npm:^10.0.0":
-  version: 10.2.4
-  resolution: "autoprefixer@npm:10.2.4"
+  version: 10.3.7
+  resolution: "autoprefixer@npm:10.3.7"
   dependencies:
-    browserslist: ^4.16.1
-    caniuse-lite: ^1.0.30001181
-    colorette: ^1.2.1
-    fraction.js: ^4.0.13
+    browserslist: ^4.17.3
+    caniuse-lite: ^1.0.30001264
+    fraction.js: ^4.1.1
     normalize-range: ^0.1.2
+    picocolors: ^0.2.1
     postcss-value-parser: ^4.1.0
   peerDependencies:
     postcss: ^8.1.0
   bin:
     autoprefixer: bin/autoprefixer
-  checksum: c07fb325ee63e535a2246be4ac0d6afc9e9e43e66386e39c495015bdc8d83547ffdc0797be22d88781d044d3eecbbcb13d8a550ef94eb684091b24a05eb0c83e
+  checksum: bbd835343f14de4aaa9246d2196374eaafa59f2f9de3070ac4f9d7c5a92901b8fd6d03b5b0b33ed2b33c971946a010a69dc3703005456774ced5d98bb0e275e0
   languageName: node
   linkType: hard
 
@@ -3196,6 +3196,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"browserslist@npm:^4.17.3":
+  version: 4.17.4
+  resolution: "browserslist@npm:4.17.4"
+  dependencies:
+    caniuse-lite: ^1.0.30001265
+    electron-to-chromium: ^1.3.867
+    escalade: ^3.1.1
+    node-releases: ^2.0.0
+    picocolors: ^1.0.0
+  bin:
+    browserslist: cli.js
+  checksum: b2b7acf1a8c983902de3bc9ed4f23ad471e402d987ed12cc11766b05373a6c239343ca04d28ab0ac06c9e76bf0e37ffbd7f0dcf9bd9f54f4782c26211d40c08a
+  languageName: node
+  linkType: hard
+
 "buffer-from@npm:^1.0.0":
   version: 1.1.1
   resolution: "buffer-from@npm:1.1.1"
@@ -3434,6 +3449,13 @@ __metadata:
   version: 1.0.30001185
   resolution: "caniuse-lite@npm:1.0.30001185"
   checksum: 35a6087bfefebe963de5025c8eb7165c3ccb4e8f55e27beb6169391c9ccd7b1cb09c430779e10211d3afd7ead55be8ade13971e85d80fbe614405afb2467d6c2
+  languageName: node
+  linkType: hard
+
+"caniuse-lite@npm:^1.0.30001264, caniuse-lite@npm:^1.0.30001265":
+  version: 1.0.30001269
+  resolution: "caniuse-lite@npm:1.0.30001269"
+  checksum: e544bd20bf4186cc32ef24881ec45a8d61898e37ff4efc7736ad0f7419baf2ec2560de308ec28209f0aae637ec76baea9f1517eaa13cd06b35a14de86b25fc68
   languageName: node
   linkType: hard
 
@@ -4854,6 +4876,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"electron-to-chromium@npm:^1.3.867":
+  version: 1.3.871
+  resolution: "electron-to-chromium@npm:1.3.871"
+  checksum: 9226692a6b8291047f220a1706b527d6952e4de37b2f87ead9374a3f7eb70989cf98156d333316e3e7d5b1c6cc93c8dd276807c41a94ee0f434e5807f2a84b76
+  languageName: node
+  linkType: hard
+
 "elliptic@npm:^6.5.3":
   version: 6.5.4
   resolution: "elliptic@npm:6.5.4"
@@ -5926,10 +5955,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fraction.js@npm:^4.0.13":
-  version: 4.0.13
-  resolution: "fraction.js@npm:4.0.13"
-  checksum: 1e9ec132b09f17f3e41aa53508197901277f11896f6adc0b51a4b38511e6236813a471488c319221f4fadf7c854be9566a4924215623b460364591d80e1791c3
+"fraction.js@npm:^4.1.1":
+  version: 4.1.1
+  resolution: "fraction.js@npm:4.1.1"
+  checksum: 3667dfc48804ba4623f43e8d284a30f9abcb546f59c44dbcb51722e114d77fb06f0fe9bf051db816db6b2679c55dfccb633c4841c3436b2239c5dffcef0a8ccf
   languageName: node
   linkType: hard
 
@@ -8490,6 +8519,13 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
+"node-releases@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "node-releases@npm:2.0.0"
+  checksum: 072914baf9eab6cc4fb051935acf6a4f9974ab47224794375c817513ca3645dc9f3a65a821e9c6a6d54213e771c4d49db8cff0b6b8bb6b9b31424c815c716829
+  languageName: node
+  linkType: hard
+
 "nopt@npm:^5.0.0":
   version: 5.0.0
   resolution: "nopt@npm:5.0.0"
@@ -9188,6 +9224,20 @@ fsevents@~2.3.1:
   version: 2.1.0
   resolution: "performance-now@npm:2.1.0"
   checksum: bb4ebed0b03d6c3ad3ae4eddd1182c895d385cff9096af441c19c130aaae3ea70229438ebc3297dfc52c86022f6becf177a810050823d01bf5280779cd2de624
+  languageName: node
+  linkType: hard
+
+"picocolors@npm:^0.2.1":
+  version: 0.2.1
+  resolution: "picocolors@npm:0.2.1"
+  checksum: 84da675558ed004c61a7fa7b0bcce6338c8e3ef1eadb43b5263059d1d745f4567464aa6aa603c506a82942a5a7dfda5bb023605a5f4c9888d7adc154845d579e
+  languageName: node
+  linkType: hard
+
+"picocolors@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "picocolors@npm:1.0.0"
+  checksum: 6616d34dd03bde8881c63402dea34f0b5972845b04b791b234446d4a408bc3d7f932acea3970a6b671d8f5c5aae1b1ce9fc1f89b0ed9a363469cf9da8e916b71
   languageName: node
   linkType: hard
 
