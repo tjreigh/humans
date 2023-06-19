@@ -1163,6 +1163,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/runtime@npm:^7.21.0":
+  version: 7.22.3
+  resolution: "@babel/runtime@npm:7.22.3"
+  dependencies:
+    regenerator-runtime: ^0.13.11
+  checksum: d5eac992aadc71b494d1f7da38a8f03879208173b70042fe360546dcb517801ffb8470637a8dea4e50a325b4a566ad6f0ed4b85853f28b13adbf40008157ce32
+  languageName: node
+  linkType: hard
+
 "@babel/template@npm:^7.0.0, @babel/template@npm:^7.12.13":
   version: 7.12.13
   resolution: "@babel/template@npm:7.12.13"
@@ -4407,10 +4416,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"date-fns@npm:2.17.0":
-  version: 2.17.0
-  resolution: "date-fns@npm:2.17.0"
-  checksum: 51ee9e264aac54d2a16471691d560838bad681f729573f520b03ec0c21f28904c73bf98ec2d33603e71bdabf8506140449c2b50d0db6fdd042faed9fe5467b92
+"date-fns@npm:2.30.0":
+  version: 2.30.0
+  resolution: "date-fns@npm:2.30.0"
+  dependencies:
+    "@babel/runtime": ^7.21.0
+  checksum: f8acb7de3dcce490048af59bb7b7c4e8b2fdf58189e5459a8718b423c3dcda9ed34b6fd756a2780ef5a4d705d88420e44810eb632dbe85247aa48210956982de
   languageName: node
   linkType: hard
 
@@ -6710,7 +6721,7 @@ fsevents@~2.3.1:
     cloudinary: 1.24.0
     cookie: 0.4.1
     core-js: 3.8.3
-    date-fns: 2.17.0
+    date-fns: 2.30.0
     deta: 0.0.8
     eslint: 7.18.0
     eslint-config-prettier: 7.2.0
@@ -10100,6 +10111,13 @@ fsevents@~2.3.1:
   version: 1.4.2
   resolution: "regenerate@npm:1.4.2"
   checksum: 54275a99effd8a439bcdd88942b61f68a769133df841e90d94df9ae7c250cb6537c0a28dd913116539772b3415edbcb3c8d81c22275595d3755cf0353976dfa4
+  languageName: node
+  linkType: hard
+
+"regenerator-runtime@npm:^0.13.11":
+  version: 0.13.11
+  resolution: "regenerator-runtime@npm:0.13.11"
+  checksum: b7c850f32500838961c073b885f0b18671867e2f3626d0c6de18fc269147f57d1777fe42d045cb1b9c0dc31a69a5c456d684afeb9adb05cbd788dac521403e68
   languageName: node
   linkType: hard
 
