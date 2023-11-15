@@ -4924,6 +4924,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"enhanced-resolve@npm:^5.0.0":
+  version: 5.15.0
+  resolution: "enhanced-resolve@npm:5.15.0"
+  dependencies:
+    graceful-fs: ^4.2.4
+    tapable: ^2.2.0
+  checksum: 624884d658713d61ccf1e854964566fb0e65ad6bd4fe523f4e41a7c55bab1c8804b8eccaf0e04d2c2f7dc50a8c007ebb285aa96b0a77ae1b1d58e7505696d4d3
+  languageName: node
+  linkType: hard
+
 "enquirer@npm:^2.3.5":
   version: 2.3.6
   resolution: "enquirer@npm:2.3.6"
@@ -6278,6 +6288,13 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
+"graceful-fs@npm:^4.2.4":
+  version: 4.2.11
+  resolution: "graceful-fs@npm:4.2.11"
+  checksum: 99533f7c73bafc139bfc435a628272226cb46dc2b9b3dba7395dcb6c19936db28961ad9fcd648f407c32f91998fb2102a2df4dd13951a9699c5c28e2145713a9
+  languageName: node
+  linkType: hard
+
 "gzip-size@npm:^5.0.0":
   version: 5.1.1
   resolution: "gzip-size@npm:5.1.1"
@@ -6722,7 +6739,7 @@ fsevents@~2.3.1:
     postcss: ^8.0.0
     postcss-loader: ^5.0.0
     reflect-metadata: 0.1.13
-    ts-loader: 8.0.17
+    ts-loader: 9.5.1
     typescript: 4.1.5
     uuid: 8.3.2
     vue: 2.6.12
@@ -10915,6 +10932,13 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
+"source-map@npm:^0.7.4":
+  version: 0.7.4
+  resolution: "source-map@npm:0.7.4"
+  checksum: 537ca237b2f0cfd5922e0f74166516e02deb871ac91f55d0fb28e08283b25e31501e0708ac8a939d67764c79eaefed1c0343be7307699c7a10f3fd9989c56fa7
+  languageName: node
+  linkType: hard
+
 "spdx-correct@npm:^3.0.0":
   version: 3.1.1
   resolution: "spdx-correct@npm:3.1.1"
@@ -11356,6 +11380,13 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
+"tapable@npm:^2.2.0":
+  version: 2.2.1
+  resolution: "tapable@npm:2.2.1"
+  checksum: 41089367e2dfde0825ec2cf273388eff6d8d9f8c5560f9e4547decd6e1527743e45d577ad9f03b67719ed270b19b6f428759a615316fd2dfdd337f622abbc0ad
+  languageName: node
+  linkType: hard
+
 "tar@npm:^6.0.2":
   version: 6.1.0
   resolution: "tar@npm:6.1.0"
@@ -11593,19 +11624,19 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"ts-loader@npm:8.0.17":
-  version: 8.0.17
-  resolution: "ts-loader@npm:8.0.17"
+"ts-loader@npm:9.5.1":
+  version: 9.5.1
+  resolution: "ts-loader@npm:9.5.1"
   dependencies:
     chalk: ^4.1.0
-    enhanced-resolve: ^4.0.0
-    loader-utils: ^2.0.0
+    enhanced-resolve: ^5.0.0
     micromatch: ^4.0.0
     semver: ^7.3.4
+    source-map: ^0.7.4
   peerDependencies:
     typescript: "*"
-    webpack: "*"
-  checksum: e09b71875034ec5daf0f6eac2acefea31c78df1a0aa2d6f76f66954326acf93bafa9092a5a7f5872276bba39ba4dfebbcb7c21ef88d4334ff95bb4d216b9dfe0
+    webpack: ^5.0.0
+  checksum: 16ff80ac8bdc0929ee7003fa7fc18fbe3313289eef16aa9684c51a256ec9d6d1255bd5f973660b0ea1b82a0e25ab8b2c5ac36efef7da4b6afc49375cd5b1c629
   languageName: node
   linkType: hard
 
