@@ -311,6 +311,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/parser@npm:^7.23.5":
+  version: 7.23.6
+  resolution: "@babel/parser@npm:7.23.6"
+  bin:
+    parser: ./bin/babel-parser.js
+  checksum: 685f7e72b577e8a1c0bc12fc011678d06356b0d798bcd97bca52fa9351080ca31976266c132983304f567f3d4cbcfe96ff0ce3a230d97279c3a9b3e5dd9303e9
+  languageName: node
+  linkType: hard
+
 "@babel/plugin-proposal-async-generator-functions@npm:^7.12.13":
   version: 7.12.13
   resolution: "@babel/plugin-proposal-async-generator-functions@npm:7.12.13"
@@ -2088,6 +2097,21 @@ __metadata:
     semver: ^6.1.0
     strip-ansi: ^6.0.0
   checksum: 7aca35cd67b5d38dab899d726f845875f7e0a6b7a8e8cddd309d3a9c28910614c86a5d4fa2843f65a00ac25b063279d1cb6078ee55147438bbf7d236507da25e
+  languageName: node
+  linkType: hard
+
+"@vue/compiler-sfc@npm:2.7.16":
+  version: 2.7.16
+  resolution: "@vue/compiler-sfc@npm:2.7.16"
+  dependencies:
+    "@babel/parser": ^7.23.5
+    postcss: ^8.4.14
+    prettier: ^1.18.2 || ^2.0.0
+    source-map: ^0.6.1
+  dependenciesMeta:
+    prettier:
+      optional: true
+  checksum: 64ad1202556bd912adba94c34f135a48298df540866e69dc114afe7b4086edf723b92ce7e145e65ac4400e99b9870d51c75df3a87d7a25649f5d5fd9ac3ddcf7
   languageName: node
   linkType: hard
 
@@ -4391,6 +4415,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"csstype@npm:^3.1.0":
+  version: 3.1.3
+  resolution: "csstype@npm:3.1.3"
+  checksum: f58ab59b79d78381b40f503eb6e99164fe3e245b972e2d4ca4c80cac6a73c691a770eeadfee0ffc73a1def1d2544db15e6ad364a770059eb4bbaee645e1d3098
+  languageName: node
+  linkType: hard
+
 "cyclist@npm:^1.0.1":
   version: 1.0.1
   resolution: "cyclist@npm:1.0.1"
@@ -6432,7 +6463,7 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"he@npm:1.2.x, he@npm:^1.1.0":
+"he@npm:1.2.x, he@npm:^1.2.0":
   version: 1.2.0
   resolution: "he@npm:1.2.0"
   bin:
@@ -6725,14 +6756,14 @@ fsevents@~2.3.1:
     ts-loader: 8.0.17
     typescript: 4.1.5
     uuid: 8.3.2
-    vue: 2.6.12
+    vue: 2.7.16
     vue-class-component: 7.2.6
     vue-cookies: 1.7.4
     vue-loader: 15.9.6
     vue-picture-input: 2.1.6
     vue-property-decorator: 9.1.2
     vue-router: 3.5.1
-    vue-template-compiler: 2.6.12
+    vue-template-compiler: 2.7.16
     vuex: 3.6.2
     vuex-persistedstate: 4.0.0-beta.3
     webpack: ^4.44.0
@@ -8351,6 +8382,15 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
+"nanoid@npm:^3.3.7":
+  version: 3.3.7
+  resolution: "nanoid@npm:3.3.7"
+  bin:
+    nanoid: bin/nanoid.cjs
+  checksum: cf385d845762bbc9f71827889ccbfa828348d48919ef6745819f60cafa5df2f4ba45a20ffbd02d7a48dd87a4abfaf62b08e23e48fc8e0eba059b97bdd331b64c
+  languageName: node
+  linkType: hard
+
 "nanomatch@npm:^1.2.9":
   version: 1.2.13
   resolution: "nanomatch@npm:1.2.13"
@@ -9191,6 +9231,13 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
+"picocolors@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "picocolors@npm:1.0.0"
+  checksum: 6616d34dd03bde8881c63402dea34f0b5972845b04b791b234446d4a408bc3d7f932acea3970a6b671d8f5c5aae1b1ce9fc1f89b0ed9a363469cf9da8e916b71
+  languageName: node
+  linkType: hard
+
 "picomatch@npm:^2.0.4, picomatch@npm:^2.0.5, picomatch@npm:^2.2.1":
   version: 2.2.2
   resolution: "picomatch@npm:2.2.2"
@@ -9744,6 +9791,17 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
+"postcss@npm:^8.4.14":
+  version: 8.4.32
+  resolution: "postcss@npm:8.4.32"
+  dependencies:
+    nanoid: ^3.3.7
+    picocolors: ^1.0.0
+    source-map-js: ^1.0.2
+  checksum: 0eabe7679b9f63ef2c87400a16a7e70df5fdfaef0f63af844dcbce73be6463a2e73d3a43b267c2f490e23bdc3f838fb3047b7ba21334da8922dd09ec3dcb5025
+  languageName: node
+  linkType: hard
+
 "prelude-ls@npm:^1.2.1":
   version: 1.2.1
   resolution: "prelude-ls@npm:1.2.1"
@@ -9773,6 +9831,15 @@ fsevents@~2.3.1:
   bin:
     prettier: ./bin-prettier.js
   checksum: e5fcdfe5e159ef5c5480245353cf8fb5bbd1b8afff266f31f281641825238f8a645e58472f77cd75a09ccc45d44c335466e8d901ec138c2bda05e1bd6ea1077c
+  languageName: node
+  linkType: hard
+
+"prettier@npm:^1.18.2 || ^2.0.0":
+  version: 2.8.8
+  resolution: "prettier@npm:2.8.8"
+  bin:
+    prettier: bin-prettier.js
+  checksum: a2afc2fea5326d1e3667e385652f4f82ebb3467a79fd893ad237e683a65ad865ecf108658cfc296cc1224ce5862340417a4eddea2174917d3b4bc732e3e83501
   languageName: node
   linkType: hard
 
@@ -10861,6 +10928,13 @@ fsevents@~2.3.1:
   version: 2.0.1
   resolution: "source-list-map@npm:2.0.1"
   checksum: d8d45f29987d00d995ccda308dcc78b710031a9958fdb5d26674d32220c952eb7a8562062638d91896628ae4eef30e1cd112a6a547563dfda0b013024c2a9bf7
+  languageName: node
+  linkType: hard
+
+"source-map-js@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "source-map-js@npm:1.0.2"
+  checksum: 3bb232796ad9b71bad151cb30c7fc1a2afdaf5bcfd4aa7806f56a2d4ff4824e1481e960436c5e9ec26e8c1ae129aee8107df0859c15b1ccada31a9a7ef254abc
   languageName: node
   linkType: hard
 
@@ -12262,13 +12336,13 @@ typescript@4.1.5:
   languageName: node
   linkType: hard
 
-"vue-template-compiler@npm:2.6.12":
-  version: 2.6.12
-  resolution: "vue-template-compiler@npm:2.6.12"
+"vue-template-compiler@npm:2.7.16":
+  version: 2.7.16
+  resolution: "vue-template-compiler@npm:2.7.16"
   dependencies:
     de-indent: ^1.0.2
-    he: ^1.1.0
-  checksum: 5b05dda398cc1df7ba244316ddfb8f6463dbaafb4d23a4ac7e1cb8914e813a464f4ac055e41ac6e60feeadd4cccdeec1111fac592f2bb4eeb320889846a18912
+    he: ^1.2.0
+  checksum: 5217847e19d260f091c660eae327872a47d187d2c6020fc17c9871b16068ddf9ad2db12e4c5bddc766b0be8afbf80ac8e0f7a7d1d8a4ec9fe7ee5ff78d61df7d
   languageName: node
   linkType: hard
 
@@ -12279,10 +12353,13 @@ typescript@4.1.5:
   languageName: node
   linkType: hard
 
-"vue@npm:2.6.12":
-  version: 2.6.12
-  resolution: "vue@npm:2.6.12"
-  checksum: 92ed547e55a4b27a2a45aa9ab7ff5999f891dc9754562a37226dd190b323d9f99daec892dd8bd39786e404e6e065d808e165b1a0c127ce8d45fd1bde79ec7312
+"vue@npm:2.7.16":
+  version: 2.7.16
+  resolution: "vue@npm:2.7.16"
+  dependencies:
+    "@vue/compiler-sfc": 2.7.16
+    csstype: ^3.1.0
+  checksum: ba2ab021d24327ba1b9f692809f818a90374ff20a4d69f6900efb315870c7004c134c7ac1320b496d2084782077781474e32cb6108d1ac7414b8f304ee819d25
   languageName: node
   linkType: hard
 
