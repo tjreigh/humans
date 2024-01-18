@@ -3719,24 +3719,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cloudinary-core@npm:^2.10.2":
-  version: 2.11.3
-  resolution: "cloudinary-core@npm:2.11.3"
+"cloudinary-core@npm:^2.13.0":
+  version: 2.13.0
+  resolution: "cloudinary-core@npm:2.13.0"
   peerDependencies:
     lodash: ">=4.0"
-  checksum: 4574514da172d1cf364a3b67f2adf02c06ce7bef87d712abab94e1ae6366a137ca2669f26776908f29e3e1fb85e1d2b6b0046230bddaef9421c5d3a75e022cc3
+  checksum: 4bd714e0516016e38d6ac95a5aa27e0e200bee8e081760e23749952316aaba76e1d31eeb169012f4e3e85624a8bcaeb21221de96b442900c554bd5dd6351490a
   languageName: node
   linkType: hard
 
-"cloudinary@npm:1.24.0":
-  version: 1.24.0
-  resolution: "cloudinary@npm:1.24.0"
+"cloudinary@npm:1.41.3":
+  version: 1.41.3
+  resolution: "cloudinary@npm:1.41.3"
   dependencies:
-    cloudinary-core: ^2.10.2
-    core-js: 3.6.5
-    lodash: ^4.17.11
+    cloudinary-core: ^2.13.0
+    core-js: ^3.30.1
+    lodash: ^4.17.21
     q: ^1.5.1
-  checksum: a38a3a3143c462a0694607e933a94af90d4a55e4cd3c87dcdc7edc2ca9a3f6d9552e9ab8f81e3ac47293862525a1a471f6da7686ece146f1dc228917882b8125
+  checksum: 814afabd28358348866caf66dd807d3db349be4df48afac158d8d7d1aaa778783824ac53cd9a1b2cdb0e1ae822e295cf24b019f137fa492910c6a51c0a27b203
   languageName: node
   linkType: hard
 
@@ -4057,17 +4057,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"core-js@npm:3.6.5":
-  version: 3.6.5
-  resolution: "core-js@npm:3.6.5"
-  checksum: 9283348dd5be2f1d07feaf90e2336b3f00a2316e3d3c6d4f789c9a67bdd4d7b08ce1c88dca4e591340130056c6b412b0b74fae039f8e259206f1073f542e4e85
-  languageName: node
-  linkType: hard
-
 "core-js@npm:3.8.3, core-js@npm:^3.6.5":
   version: 3.8.3
   resolution: "core-js@npm:3.8.3"
   checksum: 3c67d1732d505f6afaf836f18038dae8267e8c0e8e84e1c679bac67589e66d0807c24750c7d8b1118cc386c3d66a1d96f20d9cb0f6a879b19cfc04e9f073fe78
+  languageName: node
+  linkType: hard
+
+"core-js@npm:^3.30.1":
+  version: 3.35.0
+  resolution: "core-js@npm:3.35.0"
+  checksum: 032e98ea0ed23de34f69241457f718c2e8bc05b7585beee0621612fa7aa6e68ee51381f4cda2a656e1a3e7048959244f37ce97626c14e1a52c3c08b1219c749a
   languageName: node
   linkType: hard
 
@@ -6707,7 +6707,7 @@ fsevents@~2.3.1:
     babel-loader: ^8.2.2
     babel-plugin-module-resolver: ^4.1.0
     bcryptjs: 2.4.3
-    cloudinary: 1.24.0
+    cloudinary: 1.41.3
     cookie: 0.4.1
     core-js: 3.8.3
     date-fns: 2.17.0
@@ -7824,6 +7824,13 @@ fsevents@~2.3.1:
   version: 4.17.20
   resolution: "lodash@npm:4.17.20"
   checksum: c62101d2500c383b5f174a7e9e6fe8098149ddd6e9ccfa85f36d4789446195f5c4afd3cfba433026bcaf3da271256566b04a2bf2618e5a39f6e67f8c12030cb6
+  languageName: node
+  linkType: hard
+
+"lodash@npm:^4.17.21":
+  version: 4.17.21
+  resolution: "lodash@npm:4.17.21"
+  checksum: 4983720b9abca930a4a46f18db163d7dad8dd00dbed6db0cc7b499b33b717cce69f80928b27bbb1ff2cbd3b19d251ee90669a8b5ea466072ca81c2ebe91e7468
   languageName: node
   linkType: hard
 
