@@ -4057,6 +4057,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"core-js@npm:3.36.1":
+  version: 3.36.1
+  resolution: "core-js@npm:3.36.1"
+  checksum: c2339cfe8c93173688eec8af0fd1b0a24d710615e63e9d3c5027be70feeb74e4ba17e2bd5bc4b959f705061d8b1b244962185c850d5d8b58bad35c5005be7505
+  languageName: node
+  linkType: hard
+
 "core-js@npm:3.6.5":
   version: 3.6.5
   resolution: "core-js@npm:3.6.5"
@@ -4064,7 +4071,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"core-js@npm:3.8.3, core-js@npm:^3.6.5":
+"core-js@npm:^3.6.5":
   version: 3.8.3
   resolution: "core-js@npm:3.8.3"
   checksum: 3c67d1732d505f6afaf836f18038dae8267e8c0e8e84e1c679bac67589e66d0807c24750c7d8b1118cc386c3d66a1d96f20d9cb0f6a879b19cfc04e9f073fe78
@@ -6709,7 +6716,7 @@ fsevents@~2.3.1:
     bcryptjs: 2.4.3
     cloudinary: 1.24.0
     cookie: 0.4.1
-    core-js: 3.8.3
+    core-js: 3.36.1
     date-fns: 2.17.0
     deta: 0.0.8
     eslint: 7.18.0
