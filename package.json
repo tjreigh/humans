@@ -18,7 +18,7 @@
 		"date-fns": "2.17.0",
 		"deta": "0.0.8",
 		"uuid": "8.3.2",
-		"vue": "2.6.12",
+		"vue": "3.0.0",
 		"vue-cookies": "1.7.4",
 		"vue-picture-input": "2.1.6",
 		"vuex-persistedstate": "4.0.0-beta.3"
